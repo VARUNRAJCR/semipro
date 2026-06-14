@@ -12,7 +12,7 @@ import phase4
 import phase5
 
 # ==========================================
-# 1. APPLICATION INITIALIZATION LAYERS
+# 1. APPLICATION INITIALIZATION
 # ==========================================
 st.set_page_config(page_title="SemiPro | Semiconductor Workspace", layout="wide")
 
@@ -22,7 +22,7 @@ if "chat_history" not in st.session_state: st.session_state.chat_history = []
 if "GEMINI_API_KEY" in st.secrets:
     os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
 
-# Execute styling configurations from your style module
+# Apply styles from your independent style module
 apply_semiconductor_theme()
 
 # ==========================================
@@ -40,7 +40,7 @@ st.markdown("""
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resize); resize();
 
-        const grainCount = 120;
+        const grainCount = 130;
         const gravitationalPull = 0.015;
         const windDriftFactor = -0.03;
         const grains = [];
@@ -83,13 +83,14 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# 3. GLOBAL PERSISTENT SIDEBAR NAVIGATION
+# 3. SMOOTH GLOBAL SIDEBAR (Access any Module/Phase anywhere)
 # ==========================================
 with st.sidebar:
     st.markdown("<h2 style='font-weight:800; font-size:1.85rem; color:#ffffff; letter-spacing:-1px; margin-bottom:0;'>SemiPro</h2>", unsafe_allow_html=True)
-    st.markdown("<p style='color:#4b5563; font-size:0.85rem; font-weight:500; margin-top:2px;'>Silicon Engineering Academy</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#64748b; font-size:0.85rem; font-weight:500; margin-top:2px;'>Silicon Engineering Academy</p>", unsafe_allow_html=True)
     st.write("---")
     
+    # Fully mapped linear list containing all phases and their structural scopes
     navigation_vector = [
         "Home Dashboard", 
         "Phase 1: CMOS Deep Dive", 
@@ -100,7 +101,7 @@ with st.sidebar:
     ]
     
     current_index = navigation_vector.index(st.session_state.current_page) if st.session_state.current_page in navigation_vector else 0
-    selected_sidebar_page = st.radio("Academy Tracks Hub:", navigation_vector, index=current_index)
+    selected_sidebar_page = st.radio("Jump to Phase or Module:", navigation_vector, index=current_index)
     
     if selected_sidebar_page != st.session_state.current_page:
         st.session_state.current_page = selected_sidebar_page
@@ -111,7 +112,7 @@ with st.sidebar:
 # ==========================================
 st.markdown("<div class='glass-panel'>", unsafe_allow_html=True)
 
-# Pinned navigation escape hatch for sub-modules
+# Dynamic quick escape link to change track instantly
 if st.session_state.current_page != "Home Dashboard":
     if st.button("To change track or view modules click here"):
         st.session_state.current_page = "Home Dashboard"
@@ -120,8 +121,8 @@ if st.session_state.current_page != "Home Dashboard":
 
 # DASHBOARD LAYER
 if st.session_state.current_page == "Home Dashboard":
-    st.markdown("<h1 style='font-weight:800; font-size:3rem; letter-spacing:-1.5px; color:#ffffff; margin-bottom:8px;'>Physical Design Portal</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='font-size:1.2rem; color:#9ca3af; font-weight:300; margin-bottom:45px;'>Step directly into custom engineering sandboxes mapped across five progressive IC layout segments.</p>", unsafe_allow_html=True)
+    st.markdown("<h1 style='font-weight:800; font-size:3rem; letter-spacing:-1.5px; color:#ffffff; margin-bottom:8px;'>SemiPro</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size:1.2rem; color:#9ca3af; font-weight:300; margin-bottom:45px;'>Master modern semiconductor integration tracks systematically from raw transistor logic up to sign-off tapeout.</p>", unsafe_allow_html=True)
     
     row1_col1, row1_col2, row1_col3 = st.columns(3)
     with row1_col1:
@@ -143,7 +144,7 @@ if st.session_state.current_page == "Home Dashboard":
         st.markdown("<div class='silicon-vector-card'><h3>Phase 5: Physical Design (PD)</h3><p>Execute full floorplanning grid blocks, balance clock trees, run routing tracks, and sign-off DRC checks.</p></div>", unsafe_allow_html=True)
         if st.button("Open Phase 5 Workspace", use_container_width=True): st.session_state.current_page = "Phase 5: Physical Design"; st.rerun()
 
-# RENDER DELEGATED MODULAR TRACK PAGES
+# DELEGATE ROUTING TO MODULAR FILES
 elif st.session_state.current_page == "Phase 1: CMOS Deep Dive": phase1.render_phase_1()
 elif st.session_state.current_page == "Phase 2: Digital Electronics": phase2.render_phase_2()
 elif st.session_state.current_page == "Phase 3: Register Transfer Level": phase3.render_phase_3()
