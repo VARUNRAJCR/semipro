@@ -12,7 +12,7 @@ import phase4
 import phase5
 
 # ==========================================
-# 1. HARDWARE SYSTEM CORE SETUPS
+# 1. APPLICATION DATA INITIALIZATION
 # ==========================================
 st.set_page_config(page_title="SemiPro | Semiconductor Workspace", layout="wide")
 
@@ -23,11 +23,33 @@ if "chat_history" not in st.session_state: st.session_state.chat_history = []
 if "GEMINI_API_KEY" in st.secrets:
     os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
 
-# Apply layouts from independent style file module
+# Apply layouts from separate style file module
 apply_semiconductor_theme()
 
+# Catch layout state trigger requests before processing views
+query_parameters = st.query_params
+if "action_toggle_menu" in query_parameters:
+    st.session_state.show_topics_menu = not st.session_state.show_topics_menu
+    st.query_params.clear() # Flush processing queues
+    st.rerun()
+
 # ==========================================
-# 2. NATIVE MATHEMATICAL BACKGROUND CANVAS
+# 2. INJECT PURE HTML INTERACTIVE POWER-ON BADGE
+# ==========================================
+trigger_label = "Close Content ✕" if st.session_state.show_topics_menu else "Content ☰"
+
+st.markdown(f"""
+    <div class="hardware-trigger-container">
+        <a href="?action_toggle_menu=execute" target="_self" style="text-decoration: none;">
+            <div class="hardware-wake-btn">
+                {trigger_label}
+            </div>
+        </a>
+    </div>
+""", unsafe_allow_html=True)
+
+# ==========================================
+# 3. NATIVE MATHEMATICAL BACKGROUND CANVAS
 # ==========================================
 st.markdown("""
     <div class="math-universe-bg">
@@ -84,18 +106,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# 3. TOP LEVEL ROW SPLIT INTERACTION HEADER
-# ==========================================
-header_col, trigger_col = st.columns([4, 1])
-
-with trigger_col:
-    trigger_label = "Close Content ✕" if st.session_state.show_topics_menu else "Content ☰"
-    if st.button(trigger_label, key="native_right_trigger"):
-        st.session_state.show_topics_menu = not st.session_state.show_topics_menu
-        st.rerun()
-
-# ==========================================
-# 4. ACTIVE DYNAMIC CONTENT DIRECTORY OVERLAY
+# 4. ACTIVE DYNAMIC CURRICULUM DIRECTORY MAP
 # ==========================================
 if st.session_state.show_topics_menu:
     st.markdown("<div class='curriculum-overlay-map'>", unsafe_allow_html=True)
