@@ -27,15 +27,7 @@ if "GEMINI_API_KEY" in st.secrets:
 apply_semiconductor_theme()
 
 # ==========================================
-# 2. INTEGRATED RIGHT-SIDE ACTION TRIGGER
-# ==========================================
-trigger_label = "Close Content ✕" if st.session_state.show_topics_menu else "Content ☰"
-if st.button(trigger_label, key="integrated_wave_trigger"):
-    st.session_state.show_topics_menu = not st.session_state.show_topics_menu
-    st.rerun()
-
-# ==========================================
-# 3. NATIVE MATHEMATICAL BACKGROUND CANVAS
+# 2. NATIVE MATHEMATICAL BACKGROUND CANVAS
 # ==========================================
 st.markdown("""
     <div class="math-universe-bg">
@@ -90,6 +82,25 @@ st.markdown("""
     })();
     </script>
 """, unsafe_allow_html=True)
+
+# ==========================================
+# 3. TOP ROW SPLIT: SITE IDENTIFIER & RIGHT SIDE BUTTON
+# ==========================================
+title_layout_col, action_layout_col = st.columns([5, 1])
+
+with title_layout_col:
+    # Keeps the primary platform identity tag beautifully separated on your left
+    st.markdown("<h2 style='font-weight:800; font-size:2.2rem; color:#ffffff; margin:0; padding:0; letter-spacing:-1px;'>SemiPro</h2>", unsafe_allow_html=True)
+
+with action_layout_col:
+    # Native placement pins the pulsing button to your right side perfectly with no empty placeholders
+    trigger_label = "Close Content ✕" if st.session_state.show_topics_menu else "Content ☰"
+    if st.button(trigger_label, key="native_wave_trigger"):
+        st.session_state.show_topics_menu = not st.session_state.show_topics_menu
+        st.rerun()
+
+# Spacer grid boundary line
+st.write(" ")
 
 # ==========================================
 # 4. ACTIVE DYNAMIC CONTENT DIRECTORY MAP
@@ -150,8 +161,7 @@ if st.session_state.current_page != "Home Dashboard":
     st.write("---")
 
 if st.session_state.current_page == "Home Dashboard":
-    st.markdown("<h1 style='font-weight:800; font-size:3rem; letter-spacing:-1.5px; color:#ffffff; margin-bottom:8px;'>SemiPro</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='font-size:1.2rem; color:#9ca3af; font-weight:300; margin-bottom:45px;'>Master modern semiconductor integration tracks systematically from raw transistor logic up to sign-off tapeout.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size:1.2rem; color:#9ca3af; font-weight:300; margin-bottom:45px; margin-top:10px;'>Master modern semiconductor integration tracks systematically from raw transistor logic up to sign-off tapeout.</p>", unsafe_allow_html=True)
     
     row1_col1, row1_col2, row1_col3 = st.columns(3)
     with row1_col1:
