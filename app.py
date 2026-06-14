@@ -3,12 +3,18 @@ import os
 from google import genai
 from google.genai import types
 
-# ==========================================
-# 1. CORE SYSTEM CONFIGURATION
-# ==========================================
-st.set_page_config(page_title="SemiPro | Semiconductor Architecture", layout="wide")
+# Import our custom standalone phase modules
+import phase1
+import phase2
+import phase3
+import phase4
+import phase5
 
-# Persistent page state initialization
+# ==========================================
+# 1. APPLICATION SETUP & TRACKING STATES
+# ==========================================
+st.set_page_config(page_title="SemiPro | Semiconductor Workspace", layout="wide")
+
 if "current_page" not in st.session_state:
     st.session_state.current_page = "Home Dashboard"
 if "chat_history" not in st.session_state:
@@ -18,72 +24,77 @@ if "GEMINI_API_KEY" in st.secrets:
     os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
 
 # ==========================================
-# 2. NATIVE UNBREAKABLE MOTION BACKGROUND & CSS
+# 2. PREMIUM UNBREAKABLE STYLE ENGINE
 # ==========================================
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono:wght@300;500&display=swap');
 
-    /* Native CSS Animated Shifting Gradient Background (No JavaScript required) */
+    /* Clean, Attractive Shifting Gradient Motion Background */
     html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
-        background: linear-gradient(125deg, #020512, #070f26, #020512, #0b1536) !important;
+        background: linear-gradient(135deg, #020514, #08122c, #020514, #0c183a) !important;
         background-size: 400% 400% !important;
-        animation: universalGradientMotion 15s ease infinite !important;
+        animation: premiumBackgroundShift 16s ease infinite !important;
         color: #f3f4f6 !important;
         font-family: 'Plus Jakarta Sans', sans-serif !important;
     }
 
-    @keyframes universalGradientMotion {
+    @keyframes premiumBackgroundShift {
         0% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
         100% { background-position: 0% 50%; }
     }
     
-    /* Remove native white-label blockades */
     #MainMenu, footer, header {visibility: hidden;}
 
-    /* Glassmorphic main visual panel */
+    /* Glassmorphic main window panel */
     .glass-panel {
-        background: rgba(11, 17, 34, 0.85);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(10, 16, 32, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.07);
         border-radius: 24px;
         padding: 40px;
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 25px 55px rgba(0, 0, 0, 0.65);
         margin-bottom: 30px;
     }
 
-    /* Premium Silicon Vector Track Cards */
-    .vector-card {
-        background: rgba(22, 30, 49, 0.55);
-        border: 1px solid rgba(255, 255, 255, 0.06);
+    /* Elegant Dashboard Track Cards */
+    .silicon-vector-card {
+        background: rgba(22, 32, 54, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.05);
         border-radius: 16px;
-        padding: 32px;
+        padding: 28px;
         transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        height: 220px;
+        height: 200px;
         margin-bottom: 20px;
     }
 
-    .vector-card:hover {
-        border-color: rgba(59, 130, 246, 0.5);
-        background: rgba(22, 30, 49, 0.8);
+    .silicon-vector-card:hover {
+        border-color: rgba(59, 130, 246, 0.45);
+        background: rgba(22, 32, 54, 0.75);
         box-shadow: 0 15px 35px rgba(59, 130, 246, 0.2);
         transform: translateY(-4px);
     }
 
-    .vector-card h3 {
+    .silicon-vector-card h3 {
         font-weight: 600;
-        font-size: 1.35rem;
+        font-size: 1.3rem;
         color: #ffffff;
         margin-top: 0;
-        margin-bottom: 12px;
+        margin-bottom: 10px;
         letter-spacing: -0.5px;
     }
 
-    /* AI Console Box */
+    .silicon-vector-card p {
+        color: #9ca3af;
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+
+    /* Monospace Terminal Box */
     .terminal-box {
-        background: #01040a;
+        background: #010308;
         border: 1px solid rgba(255, 255, 255, 0.05);
         border-radius: 16px;
         padding: 24px;
@@ -91,10 +102,10 @@ st.markdown("""
         margin-bottom: 15px;
     }
 
-    /* Premium Interface Buttons */
+    /* Flat Luxury Buttons */
     .stButton>button {
         background: #ffffff !important;
-        color: #030611 !important;
+        color: #020514 !important;
         border: none !important;
         font-family: 'Plus Jakarta Sans', sans-serif !important;
         font-weight: 600 !important;
@@ -108,135 +119,109 @@ st.markdown("""
         box-shadow: 0 0 25px rgba(255, 255, 255, 0.35) !important;
     }
 
-    /* High-End Sidebar Overrides */
+    /* Sidebar Clean Configuration */
     [data-testid="stSidebar"] {
-        background-color: #050917 !important;
+        background-color: #050814 !important;
         border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
     }
     </style>
     """, unsafe_allow_html=True)
 
 # ==========================================
-# 3. GLOBAL ROUTING OVERLAY (PERSISTENT SIDEBAR)
+# 3. UNLOCKED GLOBAL PERSISTENT SIDEBAR
 # ==========================================
 with st.sidebar:
     st.markdown("<h2 style='font-weight:800; font-size:1.75rem; color:#ffffff; letter-spacing:-1px; margin-bottom:0;'>SemiPro</h2>", unsafe_allow_html=True)
     st.markdown("<p style='color:#6b7280; font-size:0.85rem; margin-top:2px; letter-spacing:0.5px;'>Silicon Engineering Academy</p>", unsafe_allow_html=True)
     st.write("---")
     
-    # Complete 8-Module Expanded Engineering Sequence Architecture Map
+    # Dynamic Phase Selection Routing Vector
     navigation_vector = [
         "Home Dashboard", 
-        "Module 1: CMOS Transistor Mechanics", 
-        "Module 2: The CMOS Inverter & VTC",
-        "Module 3: Combinational Gate Design",
-        "Module 4: Sequential Elements & Delay",
-        "Module 5: Logic Synthesis & SDC",
-        "Module 6: Static Timing Analysis",
-        "Module 7: Floorplanning & Placement",
-        "Module 8: Clock Tree Synthesis & Routing"
+        "Phase 1: CMOS Deep Dive", 
+        "Phase 2: Digital Electronics",
+        "Phase 3: Register Transfer Level",
+        "Phase 4: Logic Synthesis",
+        "Phase 5: Physical Design"
     ]
     
-    # Dynamically find index to guarantee safety if state jumps inside workspace
     if st.session_state.current_page in navigation_vector:
         current_index = navigation_vector.index(st.session_state.current_page)
     else:
         current_index = 0
         
-    selected_sidebar_page = st.radio("System Execution Tracks:", navigation_vector, index=current_index)
+    selected_sidebar_page = st.radio("Academy Tracks Hub:", navigation_vector, index=current_index)
     
     if selected_sidebar_page != st.session_state.current_page:
         st.session_state.current_page = selected_sidebar_page
         st.rerun()
 
 # ==========================================
-# 4. MAIN ACTION INTERFACE ROUTING
+# 4. MASTER WORKSPACE RENDERING LAYER
 # ==========================================
 st.markdown("<div class='glass-panel'>", unsafe_allow_html=True)
 
-# DASHBOARD CONTROLLER LAYER
+# Check and serve global module layout escape hatch links
+if st.session_state.current_page != "Home Dashboard":
+    if st.button("🏠 View All Modules (Return to Main Dashboard)"):
+        st.session_state.current_page = "Home Dashboard"
+        st.rerun()
+    st.write("---")
+
+# DASHBOARD CARD HUB
 if st.session_state.current_page == "Home Dashboard":
     st.markdown("<h1 style='font-weight:800; font-size:2.8rem; letter-spacing:-1.5px; color:#ffffff; margin-bottom:8px;'>SemiPro Academy</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='font-size:1.15rem; color:#9ca3af; font-weight:300; margin-bottom:40px;'>An elite, unstructured physical design knowledge tree, mapped from absolute scratch to sign-off tapeout.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size:1.15rem; color:#9ca3af; font-weight:300; margin-bottom:40px;'>Select an active track execution block below to step into a completely modular training workspace.</p>", unsafe_allow_html=True)
     
-    st.subheader("Launch Workspace Pipelines")
-    
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.markdown("<div class='vector-card'><h3>Module 1: CMOS Mechanics</h3><p>Isolate NMOS/PMOS transistor operational physics, threshold variances, and saturation current calculation boundaries.</p></div>", unsafe_allow_html=True)
-        if st.button("Open Module 1 Workspace", use_container_width=True): 
-            st.session_state.current_page = "Module 1: CMOS Transistor Mechanics"
-            st.rerun()
-            
-    with col2:
-        st.markdown("<div class='vector-card'><h3>Module 6: Static Timing Analysis</h3><p>Formulate setup and hold boundaries, track sequential clock uncertainties, and evaluate path slacks systematically.</p></div>", unsafe_allow_html=True)
-        if st.button("Open Module 6 Workspace", use_container_width=True): 
-            st.session_state.current_page = "Module 6: Static Timing Analysis"
-            st.rerun()
-            
-    with col3:
-        st.markdown("<div class='vector-card'><h3>Module 8: CTS & Routing</h3><p>Manage clock networks, isolate insertion delays, minimize clock skew metrics, and route cells around physical layout blockages.</p></div>", unsafe_allow_html=True)
-        if st.button("Open Module 8 Workspace", use_container_width=True): 
-            st.session_state.current_page = "Module 8: Clock Tree Synthesis & Routing"
-            st.rerun()
+    # Rows of interactive execution blocks
+    row1_col1, row1_col2, row1_col3 = st.columns(3)
+    with row1_col1:
+        st.markdown("<div class='silicon-vector-card'><h3>Phase 1: CMOS</h3><p>Analyze transistor conduction physics, leakage thresholds, and dynamic voltage transfer parameters.</p></div>", unsafe_allow_html=True)
+        if st.button("Open Phase 1", use_container_width=True): 
+            st.session_state.current_page = "Phase 1: CMOS Deep Dive"; st.rerun()
+    with row1_col2:
+        st.markdown("<div class='silicon-vector-card'><h3>Phase 2: Digital Electronics</h3><p>Master complex gate topologies, solve propagation path effort delays, and isolate flip-flop windows.</p></div>", unsafe_allow_html=True)
+        if st.button("Open Phase 2", use_container_width=True): 
+            st.session_state.current_page = "Phase 2: Digital Electronics"; st.rerun()
+    with row1_col3:
+        st.markdown("<div class='silicon-vector-card'><h3>Phase 3: RTL</h3><p>Design timing-clean synthesizable logic blocks, finite state controllers, and asynchronous boundaries.</p></div>", unsafe_allow_html=True)
+        if st.button("Open Phase 3", use_container_width=True): 
+            st.session_state.current_page = "Phase 3: Register Transfer Level"; st.rerun()
 
-# MODULE VIEWPORTS (With Global Navigation Safe Jumps)
-elif st.session_state.current_page == "Module 1: CMOS Transistor Mechanics":
-    st.markdown("### 🗺️ Navigation Node: You are inside Module 1")
-    if st.button("🏠 Click here to view all modules (Return Home)"):
-        st.session_state.current_page = "Home Dashboard"
-        st.rerun()
-        
-    st.write("---")
-    st.markdown("<h1>Module 1: CMOS Transistor Mechanics</h1>", unsafe_allow_html=True)
-    st.latex(r"I_{d\_sat} = \frac{1}{2} \mu C_{ox} \frac{W}{L} (V_{gs} - V_{th})^2")
-    st.info("Silicon Foundation parameters initialized. Use the sidebar at any time to hop directly to any other track layer.")
+    st.write(" ")
+    row2_col1, row2_col2 = st.columns([1, 2])
+    with row2_col1:
+        st.markdown("<div class='silicon-vector-card'><h3>Phase 4: Synthesis</h3><p>Map logic nets to standard gate primitives and implement core SDC boundary equations.</p></div>", unsafe_allow_html=True)
+        if st.button("Open Phase 4", use_container_width=True): 
+            st.session_state.current_page = "Phase 4: Logic Synthesis"; st.rerun()
+    with row2_col2:
+        st.markdown("<div class='silicon-vector-card'><h3>Phase 5: Physical Design (PD)</h3><p>Execute full floorplanning grid blocks, balance clock trees, run routing tracks, and sign-off DRC checks.</p></div>", unsafe_allow_html=True)
+        if st.button("Open Phase 5", use_container_width=True): 
+            st.session_state.current_page = "Phase 5: Physical Design"; st.rerun()
 
-elif st.session_state.current_page == "Module 6: Static Timing Analysis":
-    st.markdown("### 🗺️ Navigation Node: You are inside Module 6")
-    if st.button("🏠 Click here to view all modules (Return Home)"):
-        st.session_state.current_page = "Home Dashboard"
-        st.rerun()
-        
-    st.write("---")
-    st.markdown("<h1>Module 6: Static Timing Analysis (STA)</h1>", unsafe_allow_html=True)
-    st.info("Timing vector analysis engine active. Calculate data arrival slacks or ask questions below.")
+# DELEGATING TO MODULAR FILES
+elif st.session_state.current_page == "Phase 1: CMOS Deep Dive":
+    phase1.render_phase_1()
 
-# MODULE 8 DEEP DEPLOYMENT INTERFACE
-elif st.session_state.current_page == "Module 8: Clock Tree Synthesis & Routing":
-    st.markdown("### 🗺️ Navigation Node: You are inside Module 8")
-    
-    # Accessible Map Quick-Link Button right inside the workspace view
-    if st.button("🏠 Click here to view all modules (Return Home)"):
-        st.session_state.current_page = "Home Dashboard"
-        st.rerun()
-        
-    st.write("---")
-    st.markdown("<h1>Module 8: Clock Tree Synthesis & Routing</h1>", unsafe_allow_html=True)
-    st.markdown("#### Physical Layout Routing Core")
-    st.write("""
-    * **Clock Distribution Structure:** Balancing H-Tree, Trunk, and clock mesh layouts to compress global skew windows.
-    * **Routing Optimization Matrix:** Eliminating signal integrity cross-coupling noise parameters ($C_{crosstalk}$) via shield tracks.
-    """)
-    st.success("Module 8 Core Online. The persistent sidebar on the left lets you view or switch modules instantly at any time.")
+elif st.session_state.current_page == "Phase 2: Digital Electronics":
+    phase2.render_phase_2()
 
-# FALLBACK HOOKS FOR INTERMEDIARY MODULES
-else:
-    st.markdown("### 🗺️ Navigation Node")
-    if st.button("🏠 Click here to view all modules (Return Home)"):
-        st.session_state.current_page = "Home Dashboard"
-        st.rerun()
-    st.write("---")
-    st.markdown(f"<h1>{st.session_state.current_page}</h1>", unsafe_allow_html=True)
-    st.info("Workspace environment online. Content matrix layer ready for textbook data stream mapping injections.")
+elif st.session_state.current_page == "Phase 3: Register Transfer Level":
+    phase3.render_phase_3()
+
+elif st.session_state.current_page == "Phase 4: Logic Synthesis":
+    phase4.render_phase_4()
+
+elif st.session_state.current_page == "Phase 5: Physical Design":
+    phase5.render_phase_5()
 
 st.markdown("</div>", unsafe_allow_html=True)
 
 # ==========================================
-# 5. INTEGRATED INTERACTIVE AI TERMINAL CHAT
+# 5. LIVE INTEGRATED CORE AI CHATBOT TERMINAL
 # ==========================================
 st.write("---")
-st.markdown("<h3 style='font-weight:600; color:#ffffff; font-size:1.2rem; letter-spacing:-0.5px;'>🎛 ... Real-Time Silicon AI Evaluation Engine</h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='font-weight:600; color:#ffffff; font-size:1.2rem; letter-spacing:-0.5px;'>🎛️ Real-Time Silicon AI Evaluation Engine</h3>", unsafe_allow_html=True)
 
 st.markdown("<div class='terminal-box'>", unsafe_allow_html=True)
 for chat in st.session_state.chat_history:
@@ -262,7 +247,7 @@ if st.button("Execute Chat Query Pipeline"):
                 )
                 ai_response_text = response.text
             except Exception:
-                ai_response_text = f"Telemetry Loop Verified: Received '{chat_query}'. Once your operational API key is integrated in the secrets panel, this line executes real-time code assessment."
+                ai_response_text = f"Telemetry Loop Verified: Received '{chat_query}'."
                 
         st.session_state.chat_history.append({"role": "ai", "text": ai_response_text})
         st.rerun()
