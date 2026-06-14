@@ -12,21 +12,34 @@ import phase4
 import phase5
 
 # ==========================================
-# 1. APPLICATION SETUP & STATE ENGINE
+# 1. APPLICATION SETUP & STATE STATE CONTROL
 # ==========================================
-st.set_page_config(page_title="SemiPro | Semiconductor Workspace", layout="wide", initial_sidebar_state="collapsed")
-
+# Initialize state tracking variables safely
+if "show_sidebar" not in st.session_state: st.session_state.show_sidebar = False
 if "current_page" not in st.session_state: st.session_state.current_page = "Home Dashboard"
 if "chat_history" not in st.session_state: st.session_state.chat_history = []
+
+# Set initial drawer compliance based on state selection
+sidebar_initial_mode = "expanded" if st.session_state.show_sidebar else "collapsed"
+st.set_page_config(page_title="SemiPro | Semiconductor Workspace", layout="wide", initial_sidebar_state=sidebar_initial_mode)
 
 if "GEMINI_API_KEY" in st.secrets:
     os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
 
-# Apply layouts from independent style module
+# Apply styles from your independent style module
 apply_semiconductor_theme()
 
 # ==========================================
-# 2. NATIVE MATHEMATICAL BACKGROUND CANVAS
+# 2. THE DYNAMIC SIDEBAR TRIGGER INTERACTION
+# ==========================================
+# Native trigger mechanism connected cleanly to style wave animations
+button_label = "Close topics ✕" if st.session_state.show_sidebar else "Click here for topics ☰"
+if st.button(button_label, key="topics_trigger_btn"):
+    st.session_state.show_sidebar = not st.session_state.show_sidebar
+    st.rerun()
+
+# ==========================================
+# 3. NATIVE MATHEMATICAL BACKGROUND CANVAS
 # ==========================================
 st.markdown("""
     <div class="math-universe-bg">
@@ -83,16 +96,10 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# 3. GLOWING ATTRACTIVE WAVE TRIGGER NODE
-# ==========================================
-# Injects the visual button overlay with pulse animation
-st.markdown('<div class="floating-trigger">click here for topics &lt;&lt; ☰</div>', unsafe_allow_html=True)
-
-# ==========================================
-# 4. SLIDE-OUT DRAWER OVERLAY (SIDEBAR)
+# 4. SLIDE-OUT LEFT TOPIC NAVIGATOR DRAWER
 # ==========================================
 with st.sidebar:
-    st.markdown("<br><br>", unsafe_allow_html=True) # Spacer below the floating action tag
+    st.markdown("<br><br><br>", unsafe_allow_html=True)
     st.markdown("<h2 style='font-weight:800; font-size:1.85rem; color:#ffffff; letter-spacing:-1px; margin-bottom:0;'>SemiPro</h2>", unsafe_allow_html=True)
     st.markdown("<p style='color:#64748b; font-size:0.85rem; font-weight:500; margin-top:2px;'>Silicon Engineering Academy</p>", unsafe_allow_html=True)
     st.write("---")
@@ -111,6 +118,8 @@ with st.sidebar:
     
     if selected_sidebar_page != st.session_state.current_page:
         st.session_state.current_page = selected_sidebar_page
+        # Auto collapse drawer once a phase is selected for better content visibility
+        st.session_state.show_sidebar = False 
         st.rerun()
 
 # ==========================================
@@ -118,7 +127,6 @@ with st.sidebar:
 # ==========================================
 st.markdown("<div class='glass-panel'>", unsafe_allow_html=True)
 
-# Dashboard Home link pinned cleanly at base module layers
 if st.session_state.current_page != "Home Dashboard":
     if st.button("🏠 View All Modules (Return to Main Dashboard)"):
         st.session_state.current_page = "Home Dashboard"
