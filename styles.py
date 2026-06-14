@@ -2,8 +2,8 @@ import streamlit as st
 
 def apply_semiconductor_theme():
     """
-    Injects high-end matte obsidian glassmorphic styles, a mathematical canvas setup,
-    and an attractive pulsing floating trigger wave to toggle the custom navigation drawer.
+    Injects matte obsidian glassmorphism styles, handles layout transparency,
+    and styles the native toggle button into a pulsing, floating navigation badge.
     """
     st.markdown("""
         <style>
@@ -27,44 +27,38 @@ def apply_semiconductor_theme():
         
         #MainMenu, footer, header {visibility: hidden;}
 
-        /* ATTRACTIVE GLOWING WAVE FLOATING TRIGGER BUTTON */
-        .floating-trigger {
-            position: fixed;
-            top: 25px;
-            left: 25px;
-            background: linear-gradient(135deg, #1e40af, #3b82f6);
-            color: #ffffff !important;
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            z-index: 999999;
-            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
-            animation: pulseWaveEffect 2s infinite cubic-bezier(0.66, 0, 0, 1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .floating-trigger:hover {
-            transform: scale(1.05);
-            background: linear-gradient(135deg, #2563eb, #60a5fa);
+        /* STYLE THE NATIVE STREAMLIT ELEMENT INTO A FLOATING PULSING BADGE */
+        div.element-container:has(button[key="topics_trigger_btn"]) {
+            position: fixed !important;
+            top: 25px !important;
+            left: 25px !important;
+            z-index: 999999 !important;
+            width: auto !important;
         }
 
-        /* GIF/Kinetic Motion Pulse Wave Effect */
+        button[key="topics_trigger_btn"] {
+            background: linear-gradient(135deg, #1e40af, #3b82f6) !important;
+            color: #ffffff !important;
+            padding: 12px 24px !important;
+            border-radius: 50px !important;
+            font-weight: 600 !important;
+            font-size: 0.95rem !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7) !important;
+            animation: pulseWaveEffect 2s infinite cubic-bezier(0.66, 0, 0, 1) !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        button[key="topics_trigger_btn"]:hover {
+            transform: scale(1.05) !important;
+            background: linear-gradient(135deg, #2563eb, #60a5fa) !important;
+        }
+
+        /* GIF Kinetic Motion Pulse Wave Effect */
         @keyframes pulseWaveEffect {
-            0% {
-                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 18px rgba(59, 130, 246, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
-            }
+            0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+            70% { box-shadow: 0 0 0 18px rgba(59, 130, 246, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
         }
 
         /* Premium Glass Panel Container */
@@ -122,7 +116,8 @@ def apply_semiconductor_theme():
             margin-bottom: 15px;
         }
 
-        .stButton>button {
+        /* Standard dashboard buttons styling */
+        .stButton>button:not([key="topics_trigger_btn"]) {
             background: #ffffff !important;
             color: #030712 !important;
             border: none !important;
@@ -133,9 +128,9 @@ def apply_semiconductor_theme():
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
         }
 
-        /* OVERRIDE STREAMLIT SIDEBAR TO BE A SLIDE-OUT LEFT DRAWER */
+        /* Slide-Out Drawer Custom Sidebar Skins */
         [data-testid="stSidebar"] {
-            background-color: rgba(10, 15, 30, 0.95) !important;
+            background-color: rgba(10, 15, 30, 0.96) !important;
             border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
             backdrop-filter: blur(25px);
             z-index: 99999 !important;
