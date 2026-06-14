@@ -2,49 +2,48 @@ import streamlit as st
 
 def apply_semiconductor_theme():
     """
-    Injects high-end matte obsidian glassmorphic styles and structural 
-    layout overrides to force native layout canvas compliance.
+    Injects high-end matte obsidian glassmorphic styles and structures layout
+    transparency so your native mathematical canvas can show through.
     """
     st.markdown("""
         <style>
-        /* Base typography setup */
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;800&family=JetBrains+Mono:wght@300;500&display=swap');
 
-        /* Force transparency across default content sheets so canvas shows behind them */
+        /* Force layout transparency so the mathematical canvas is fully visible */
         html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"], [data-testid="stSidebar"] {
             background: transparent !important;
             color: #f3f4f6 !important;
             font-family: 'Plus Jakarta Sans', sans-serif !important;
         }
 
-        /* Fixed Math Engine Layer Blueprint */
+        /* Fixed Background Math Positioning Layer */
         .math-universe-bg {
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
-            background-color: #02040a;
+            background-color: #030712; /* Deep premium space baseline */
             z-index: -3;
         }
         
         #MainMenu, footer, header {visibility: hidden;}
 
-        /* Matte Obsidian Glass Panel Containers */
+        /* Premium Matte Obsidian Glass Panel - NO BLACK BOXES */
         .glass-panel {
-            background: rgba(10, 15, 30, 0.82);
-            border: 1px solid rgba(255, 255, 255, 0.07);
+            background: rgba(15, 23, 42, 0.75) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
             border-radius: 24px;
             padding: 40px;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 25px 55px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 25px 55px rgba(0, 0, 0, 0.5);
             margin-bottom: 30px;
             z-index: 1;
         }
 
-        /* Industrial Interactive Phase Layout Cards */
+        /* High-End Vector Navigation Cards */
         .silicon-vector-card {
-            background: linear-gradient(145deg, rgba(17, 24, 39, 0.65), rgba(31, 41, 55, 0.35));
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.45), rgba(15, 23, 42, 0.35)) !important;
+            border: 1px solid rgba(255, 255, 255, 0.05) !important;
             border-radius: 20px;
             padding: 28px;
             transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -53,8 +52,8 @@ def apply_semiconductor_theme():
         }
 
         .silicon-vector-card:hover {
-            border-color: rgba(59, 130, 246, 0.45);
-            background: linear-gradient(145deg, rgba(17, 24, 39, 0.75), rgba(31, 41, 55, 0.45));
+            border-color: rgba(59, 130, 246, 0.5) !important;
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.5)) !important;
             box-shadow: 0 15px 35px rgba(59, 130, 246, 0.2);
             transform: translateY(-5px);
         }
@@ -74,21 +73,20 @@ def apply_semiconductor_theme():
             line-height: 1.6;
         }
 
-        /* Monospace AI Terminal Box */
+        /* Glassmorphic AI Terminal Box - Matches original design */
         .terminal-box {
-            background: rgba(1, 3, 9, 0.92);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(15, 23, 42, 0.6) !important;
+            border: 1px solid rgba(255, 255, 255, 0.06) !important;
             border-radius: 20px;
             padding: 24px;
             font-family: 'JetBrains Mono', monospace;
             margin-bottom: 15px;
-            box-shadow: inset 0 4px 20px rgba(0,0,0,0.9);
         }
 
-        /* Solid Interface Action Buttons */
+        /* Luxury Solid Interface Buttons */
         .stButton>button {
             background: #ffffff !important;
-            color: #02040a !important;
+            color: #030712 !important;
             border: none !important;
             font-family: 'Plus Jakarta Sans', sans-serif !important;
             font-weight: 600 !important;
@@ -102,15 +100,15 @@ def apply_semiconductor_theme():
             box-shadow: 0 12px 30px rgba(255, 255, 255, 0.3) !important;
         }
 
-        /* Persistent Sidebar Masking Configuration */
+        /* Persistent Sidebar Integration */
         [data-testid="stSidebar"] {
-            background-color: rgba(4, 7, 15, 0.9) !important;
-            border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+            background-color: rgba(15, 23, 42, 0.8) !important;
+            border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
             backdrop-filter: blur(15px);
         }
         
         textarea {
-            background-color: rgba(17, 24, 39, 0.5) !important;
+            background-color: rgba(30, 41, 59, 0.4) !important;
             border: 1px solid rgba(255, 255, 255, 0.08) !important;
             color: #f3f4f6 !important;
             border-radius: 12px !important;
