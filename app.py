@@ -23,32 +23,11 @@ if "chat_history" not in st.session_state: st.session_state.chat_history = []
 if "GEMINI_API_KEY" in st.secrets:
     os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
 
-# Run layout styles from style module sheets
+# Apply layouts from independent style file module
 apply_semiconductor_theme()
 
 # ==========================================
-# 2. INJECT ABSOLUTE RIGHT-ALIGNED BADGE (Bypasses container blocks)
-# ==========================================
-trigger_label = "Close Content ✕" if st.session_state.show_topics_menu else "Content ☰"
-
-# Form handler updates session values cleanly upon click
-st.markdown(f"""
-    <form action="" method="get" class="premium-right-badge">
-        <button type="submit" name="toggle_content" value="click" class="kinetic-gif-btn">
-            {trigger_label}
-        </button>
-    </form>
-""", unsafe_allow_html=True)
-
-# Process layout updates immediately when triggered
-query_parameters = st.query_params
-if "toggle_content" in query_parameters:
-    st.session_state.show_topics_menu = not st.session_state.show_topics_menu
-    st.query_params.clear() # Reset parameter loop pipelines
-    st.rerun()
-
-# ==========================================
-# 3. NATIVE MATHEMATICAL BACKGROUND CANVAS
+# 2. NATIVE MATHEMATICAL BACKGROUND CANVAS
 # ==========================================
 st.markdown("""
     <div class="math-universe-bg">
@@ -105,7 +84,18 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# 4. INTUITIVE MASTER CONTENT CURRICULUM DIRECTORY
+# 3. TOP LEVEL ROW SPLIT INTERACTION HEADER
+# ==========================================
+header_col, trigger_col = st.columns([4, 1])
+
+with trigger_col:
+    trigger_label = "Close Content ✕" if st.session_state.show_topics_menu else "Content ☰"
+    if st.button(trigger_label, key="native_right_trigger"):
+        st.session_state.show_topics_menu = not st.session_state.show_topics_menu
+        st.rerun()
+
+# ==========================================
+# 4. ACTIVE DYNAMIC CONTENT DIRECTORY OVERLAY
 # ==========================================
 if st.session_state.show_topics_menu:
     st.markdown("<div class='curriculum-overlay-map'>", unsafe_allow_html=True)
@@ -114,35 +104,35 @@ if st.session_state.show_topics_menu:
     
     col_p1, col_p2, col_p3, col_p4, col_p5 = st.columns(5)
     with col_p1:
-        st.markdown("<h4 style='color:#3b82f6; margin-bottom:5px;'>Phase 1: CMOS</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color:#06b6d4; margin-bottom:5px;'>Phase 1: CMOS</h4>", unsafe_allow_html=True)
         st.caption("• NMOS/PMOS Physics\n\n• Current Equations\n\n• Inverter VTC\n\n• Sub-Micron Leaks")
         if st.button("Open Phase 1", key="jump_p1"):
             st.session_state.current_page = "Phase 1: CMOS Deep Dive"
             st.session_state.show_topics_menu = False
             st.rerun()
     with col_p2:
-        st.markdown("<h4 style='color:#3b82f6; margin-bottom:5px;'>Phase 2: Digital</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color:#06b6d4; margin-bottom:5px;'>Phase 2: Digital</h4>", unsafe_allow_html=True)
         st.caption("• CMOS Gate Logic\n\n• Logical Effort Math\n\n• Sequential Elements\n\n• Metastability")
         if st.button("Open Phase 2", key="jump_p2"):
             st.session_state.current_page = "Phase 2: Digital Electronics"
             st.session_state.show_topics_menu = False
             st.rerun()
     with col_p3:
-        st.markdown("<h4 style='color:#3b82f6; margin-bottom:5px;'>Phase 3: RTL</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color:#06b6d4; margin-bottom:5px;'>Phase 3: RTL</h4>", unsafe_allow_html=True)
         st.caption("• Synthesizable Verilog\n\n• FSM Controllers\n\n• CDC Synchronization\n\n• Linting Rules")
         if st.button("Open Phase 3", key="jump_p3"):
             st.session_state.current_page = "Phase 3: Register Transfer Level"
             st.session_state.show_topics_menu = False
             st.rerun()
     with col_p4:
-        st.markdown("<h4 style='color:#3b82f6; margin-bottom:5px;'>Phase 4: Synthesis</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color:#06b6d4; margin-bottom:5px;'>Phase 4: Synthesis</h4>", unsafe_allow_html=True)
         st.caption("• Tech Mapping (.lib)\n\n• SDC Clock Syntax\n\n• Input/Output Delays\n\n• Wire Load Models")
         if st.button("Open Phase 4", key="jump_p4"):
             st.session_state.current_page = "Phase 4: Logic Synthesis"
             st.session_state.show_topics_menu = False
             st.rerun()
     with col_p5:
-        st.markdown("<h4 style='color:#3b82f6; margin-bottom:5px;'>Phase 5: PD</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color:#06b6d4; margin-bottom:5px;'>Phase 5: PD</h4>", unsafe_allow_html=True)
         st.caption("• Floorplan & PNS\n\n• Cell Legalization\n\n• CTS Skew Balancing\n\n• DRC/LVS Sign-off")
         if st.button("Open Phase 5", key="jump_p5"):
             st.session_state.current_page = "Phase 5: Physical Design"
@@ -195,7 +185,7 @@ elif st.session_state.current_page == "Phase 5: Physical Design": phase5.render_
 st.markdown("</div>", unsafe_allow_html=True)
 
 # ==========================================
-# 6. INTEGRATED EVALUATION TERMINAL COACH
+# 6. INTEGRATED CHATBOT LOOP
 # ==========================================
 st.write("---")
 st.markdown("<h3 style='font-weight:600; color:#ffffff; font-size:1.2rem; letter-spacing:-0.5px;'>🎛️ Real-Time Silicon AI Evaluation Engine</h3>", unsafe_allow_html=True)
