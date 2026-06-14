@@ -2,15 +2,14 @@ import streamlit as st
 
 def apply_semiconductor_theme():
     """
-    Injects high-end matte obsidian glassmorphic styles, sets layout transparency,
-    and displays the floating pulsing 'click here for topics' badge cleanly.
+    Injects high-end matte obsidian glassmorphic styles, handles layout transparency,
+    and configures the presentation for the floating pulse wave topics trigger.
     """
-    # 1. PURE STYLING SHEET LAYER
     st.markdown("""
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;800&family=JetBrains+Mono:wght@300;500&display=swap');
 
-        /* Force transparency so the mathematical canvas displays perfectly */
+        /* Force transparency across content wrappers so the sand math canvas shows through */
         html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
             background: transparent !important;
             color: #f3f4f6 !important;
@@ -28,7 +27,7 @@ def apply_semiconductor_theme():
         
         #MainMenu, footer, header {visibility: hidden;}
 
-        /* THE HIGH-END ANIMATED KINETIC TRIGGER BADGE */
+        /* THE ANIMATED KINETIC TRIGGER BADGE POSITIONING & LOOK */
         .custom-topics-trigger {
             position: fixed !important;
             top: 25px;
@@ -74,7 +73,7 @@ def apply_semiconductor_theme():
             z-index: 1;
         }
 
-        /* Vector Layout Cards */
+        /* High-End Vector Track Layout Cards */
         .silicon-vector-card {
             background: linear-gradient(145deg, rgba(30, 41, 59, 0.45), rgba(15, 23, 42, 0.35)) !important;
             border: 1px solid rgba(255, 255, 255, 0.05) !important;
@@ -106,7 +105,6 @@ def apply_semiconductor_theme():
             line-height: 1.6;
         }
 
-        /* Chatbot Console Container */
         .terminal-box {
             background: rgba(15, 23, 42, 0.65) !important;
             border: 1px solid rgba(255, 255, 255, 0.06) !important;
@@ -127,7 +125,7 @@ def apply_semiconductor_theme():
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
         }
 
-        /* Slide-Out Navigation Drawer */
+        /* Slide-Out Drawer Sidebar Setup */
         [data-testid="stSidebar"] {
             background-color: rgba(10, 15, 30, 0.96) !important;
             border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -143,24 +141,3 @@ def apply_semiconductor_theme():
         }
         </style>
     """, unsafe_allow_html=True)
-
-    # 2. RAW HTML & JAVASCRIPT LAYER (Isolated completely from the style blocks)
-    html_elements_script = """
-        <div class="custom-topics-trigger" onclick="openSidebarDrawerLoop()">click here for topics &lt;&lt;</div>
-
-        <script>
-        function openSidebarDrawerLoop() {
-            const nativeButton = window.parent.document.querySelector('button[aria-label="Open sidebar"]') || 
-                                 window.document.querySelector('button[aria-label="Open sidebar"]') ||
-                                 window.parent.document.querySelector('[data-testid="stSidebarCollapseButton"]');
-            if (nativeButton) {
-                nativeButton.click();
-            } else {
-                const sidebar = window.parent.document.querySelector('[data-testid="stSidebar"]');
-                if (sidebar) sidebar.style.transform = "translateX(0)";
-            }
-        }
-        </script>
-    """
-    # Force execution without allowing Streamlit to draw an empty layout block
-    st.components.v1.html(html_elements_script, height=0, width=0)
