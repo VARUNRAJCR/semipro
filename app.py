@@ -12,34 +12,21 @@ import phase4
 import phase5
 
 # ==========================================
-# 1. APPLICATION SETUP & STATE STATE CONTROL
+# 1. HARDWARE SYSTEM CORE SETUPS
 # ==========================================
-# Initialize state tracking variables safely
-if "show_sidebar" not in st.session_state: st.session_state.show_sidebar = False
+st.set_page_config(page_title="SemiPro | Semiconductor Workspace", layout="wide", initial_sidebar_state="collapsed")
+
 if "current_page" not in st.session_state: st.session_state.current_page = "Home Dashboard"
 if "chat_history" not in st.session_state: st.session_state.chat_history = []
-
-# Set initial drawer compliance based on state selection
-sidebar_initial_mode = "expanded" if st.session_state.show_sidebar else "collapsed"
-st.set_page_config(page_title="SemiPro | Semiconductor Workspace", layout="wide", initial_sidebar_state=sidebar_initial_mode)
 
 if "GEMINI_API_KEY" in st.secrets:
     os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
 
-# Apply styles from your independent style module
+# Apply layouts from your style file module
 apply_semiconductor_theme()
 
 # ==========================================
-# 2. THE DYNAMIC SIDEBAR TRIGGER INTERACTION
-# ==========================================
-# Native trigger mechanism connected cleanly to style wave animations
-button_label = "Close topics ✕" if st.session_state.show_sidebar else "Click here for topics ☰"
-if st.button(button_label, key="topics_trigger_btn"):
-    st.session_state.show_sidebar = not st.session_state.show_sidebar
-    st.rerun()
-
-# ==========================================
-# 3. NATIVE MATHEMATICAL BACKGROUND CANVAS
+# 2. NATIVE MATHEMATICAL BACKGROUND CANVAS
 # ==========================================
 st.markdown("""
     <div class="math-universe-bg">
@@ -53,7 +40,7 @@ st.markdown("""
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resize); resize();
 
-        const grainCount = 130;
+        const grainCount = 135;
         const gravitationalPull = 0.015;
         const windDriftFactor = -0.03;
         const grains = [];
@@ -96,7 +83,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# 4. SLIDE-OUT LEFT TOPIC NAVIGATOR DRAWER
+# 3. TRANSITION SELECTION SIDEBAR DRAWER
 # ==========================================
 with st.sidebar:
     st.markdown("<br><br><br>", unsafe_allow_html=True)
@@ -118,12 +105,10 @@ with st.sidebar:
     
     if selected_sidebar_page != st.session_state.current_page:
         st.session_state.current_page = selected_sidebar_page
-        # Auto collapse drawer once a phase is selected for better content visibility
-        st.session_state.show_sidebar = False 
         st.rerun()
 
 # ==========================================
-# 5. CENTRAL PANEL WORKSPACE VIEWPORT
+# 4. MAIN CENTRAL CONTENT HUD VIEWPORT
 # ==========================================
 st.markdown("<div class='glass-panel'>", unsafe_allow_html=True)
 
@@ -166,7 +151,7 @@ elif st.session_state.current_page == "Phase 5: Physical Design": phase5.render_
 st.markdown("</div>", unsafe_allow_html=True)
 
 # ==========================================
-# 6. INTEGRATED EVALUATION TERMINAL COACH
+# 5. INTEGRATED CHATBOT LOOP
 # ==========================================
 st.write("---")
 st.markdown("<h3 style='font-weight:600; color:#ffffff; font-size:1.2rem; letter-spacing:-0.5px;'>🎛️ Real-Time Silicon AI Evaluation Engine</h3>", unsafe_allow_html=True)
