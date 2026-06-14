@@ -2,14 +2,14 @@ import streamlit as st
 
 def apply_semiconductor_theme():
     """
-    Applies clean matte obsidian glassmorphic styles and sets up structural 
-    presentation layers for the right-side layout alignment elements.
+    Injects high-end matte obsidian glassmorphism styles, establishes a transparent layout
+    canvas baseline, and configures the pure HTML/CSS responsive kinetic content button.
     """
     st.markdown("""
         <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;800&family=JetBrains+Mono:wght@300;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;500&display=swap');
 
-        /* Force transparency across layers so the sand math canvas plays perfectly */
+        /* Force deep background transparency across all default Streamlit block wrappers */
         html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"], [data-testid="stSidebar"] {
             background: transparent !important;
             color: #f3f4f6 !important;
@@ -27,44 +27,60 @@ def apply_semiconductor_theme():
         
         #MainMenu, footer, header {visibility: hidden;}
 
-        /* NATIVE BUTTON OVERRIDE FOR THE INTEGRATED CONTENT ACTION BADGE */
-        div[data-testid="stColumn"] button[key="native_right_trigger"] {
-            background: linear-gradient(270deg, #1e40af, #3b82f6, #06b6d4, #1e40af) !important;
-            background-size: 400% 400% !important;
-            animation: circuitGifSweep 3s linear infinite, hardwareShockwave 2s infinite cubic-bezier(0.66, 0, 0, 1) !important;
-            color: #ffffff !important;
-            border: 2px solid rgba(255, 255, 255, 0.4) !important;
-            padding: 10px 24px !important;
+        /* ABSOLUTE FIXED POSITIONING HUB FOR THE CUSTOM HARDWARE BUTTON */
+        .hardware-trigger-container {
+            position: fixed !important;
+            top: 30px !important;
+            right: 40px !important;
+            z-index: 999999 !important;
+        }
+
+        /* HIGH-END POWER-ON KINETIC GIF BUTTON EFFECT */
+        .hardware-wake-btn {
+            background: linear-gradient(135deg, #0f172a, #1e293b) !important;
+            color: #06b6d4 !important; /* Premium Cyan text flare */
+            border: 2px solid #06b6d4 !important;
+            padding: 12px 28px !important;
             border-radius: 50px !important;
             font-size: 0.9rem !important;
             font-weight: 700 !important;
-            letter-spacing: 0.8px !important;
+            letter-spacing: 1px !important;
             text-transform: uppercase !important;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
-            float: right !important; /* Forces it smoothly to the absolute right side */
+            cursor: pointer !important;
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.2) !important;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+            display: inline-block !important;
+            position: relative;
+            overflow: hidden;
         }
 
-        div[data-testid="stColumn"] button[key="native_right_trigger"]:hover {
-            transform: scale(1.06) translateY(-2px) !important;
+        /* Continuous Ambient Glowing Pulse Wave (Simulates Active GIF Quality) */
+        .hardware-wake-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+            animation: ambientWakePulse 2.5s infinite linear;
+        }
+
+        @keyframes ambientWakePulse {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: scale(1.2); opacity: 0; }
+        }
+
+        /* PHONE POWER BUTTON WAKE ACTION (Instant, springy pop-out on hover) */
+        .hardware-wake-btn:hover {
+            transform: scale(1.08) !important;
+            color: #ffffff !important;
+            background: #06b6d4 !important; /* Fills instantly with light */
+            box-shadow: 
+                0 0 30px rgba(6, 182, 212, 0.6),
+                0 0 50px rgba(30, 64, 175, 0.4) !important;
             border-color: #ffffff !important;
-            box-shadow: 0 12px 25px rgba(59, 130, 246, 0.4) !important;
         }
 
-        /* Infinite linear color sweep animations */
-        @keyframes circuitGifSweep {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes hardwareShockwave {
-            0% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.6); }
-            70% { box-shadow: 0 0 0 14px rgba(6, 182, 212, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); }
-        }
-
-        /* Matte Obsidian Glass Panel Containers */
+        /* Clean Glassmorphic Core Panels - NO BLACK BOXES */
         .glass-panel {
             background: rgba(15, 23, 42, 0.76) !important;
             border: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -73,27 +89,29 @@ def apply_semiconductor_theme():
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             box-shadow: 0 25px 55px rgba(0, 0, 0, 0.5);
+            margin-top: 20px;
             margin-bottom: 30px;
             z-index: 1;
         }
 
-        /* Overlay Map Grid Panel */
+        /* POWER-ON POP OUT MENU ANIMATION (Smoothly expands outward like a booting screen) */
         .curriculum-overlay-map {
             background: rgba(10, 15, 30, 0.96) !important;
             border: 1px solid rgba(6, 182, 212, 0.3) !important;
-            border-radius: 20px;
+            border-radius: 24px;
             padding: 35px;
             margin-bottom: 30px;
-            box-shadow: 0 0 50px rgba(6, 182, 212, 0.15);
-            animation: panelPopFade 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 60px rgba(6, 182, 212, 0.2);
+            transform-origin: top right;
+            animation: screenPowerOnBoot 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); /* Elastic boot snap */
         }
 
-        @keyframes panelPopFade {
-            0% { transform: scale(0.97); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+        @keyframes screenPowerOnBoot {
+            0% { transform: scale(0.3); opacity: 0; filter: brightness(3); }
+            100% { transform: scale(1); opacity: 1; filter: brightness(1); }
         }
 
-        /* Curriculum Section Cards */
+        /* Silicon Layout Cards */
         .silicon-vector-card {
             background: linear-gradient(145deg, rgba(30, 41, 59, 0.45), rgba(15, 23, 42, 0.35)) !important;
             border: 1px solid rgba(255, 255, 255, 0.05) !important;
@@ -115,7 +133,7 @@ def apply_semiconductor_theme():
         .silicon-vector-card p { color: #9ca3af; font-size: 0.95rem; line-height: 1.6; }
         .terminal-box { background: rgba(15, 23, 42, 0.65) !important; border: 1px solid rgba(255, 255, 255, 0.06) !important; border-radius: 20px; padding: 24px; font-family: 'JetBrains Mono', monospace; margin-bottom: 15px; }
 
-        .stButton>button:not([key="native_right_trigger"]) {
+        .stButton>button {
             background: #ffffff !important;
             color: #030712 !important;
             border: none !important;
