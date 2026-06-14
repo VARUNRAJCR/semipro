@@ -2,14 +2,14 @@ import streamlit as st
 
 def apply_semiconductor_theme():
     """
-    Injects matte obsidian glassmorphic styles and customizes the right-aligned
-    pulsing trigger to look like an active, animated GIF badge labeled 'Content'.
+    Injects matte obsidian glassmorphic styles and forces a right-anchored 
+    kinetic GIF-sweep element with a 3D scaling pop-out interaction state.
     """
     st.markdown("""
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;800&family=JetBrains+Mono:wght@300;500&display=swap');
 
-        /* Force transparency across default content sheets so canvas shows behind them */
+        /* Force layout transparency so the mathematical canvas displays perfectly */
         html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"], [data-testid="stSidebar"] {
             background: transparent !important;
             color: #f3f4f6 !important;
@@ -27,50 +27,54 @@ def apply_semiconductor_theme():
         
         #MainMenu, footer, header {visibility: hidden;}
 
-        /* FORCE THE BUTTON CONTAINER TO THE UPPER RIGHT OF THE WINDOW VIEW */
+        /* FORCE THE CONTENT BUTTON TO POSITION EXACTLY ON THE RIGHT OF THE SCREEN VIEWPORT */
         div.element-container:has(button[key="right_topics_trigger"]) {
             position: fixed !important;
             top: 25px !important;
-            right: 40px !important;
-            left: auto !important;
+            right: 40px !important;  /* Pins it perfectly to the right border */
+            left: auto !important;   /* Sweeps away any left-side alignments */
             z-index: 999999 !important;
             width: auto !important;
         }
 
-        /* DIGITAL KINETIC GIF EMULATION STYLING RULES */
+        /* HIGH-SPEED KINETIC EMBEDDED GIF EFFECT */
         button[key="right_topics_trigger"] {
-            background: linear-gradient(270deg, #1e40af, #3b82f6, #0284c7, #1e40af) !important;
-            background-size: 600% 600% !important;
-            animation: kineticGifSweep 4s linear infinite, pristineRightPulse 2s infinite cubic-bezier(0.66, 0, 0, 1) !important;
+            background: linear-gradient(270deg, #1e40af, #3b82f6, #06b6d4, #1e40af) !important;
+            background-size: 400% 400% !important;
+            animation: circuitGifSweep 3s linear infinite, hardwareShockwave 2s infinite cubic-bezier(0.66, 0, 0, 1) !important;
             color: #ffffff !important;
-            padding: 12px 30px !important;
+            padding: 12px 32px !important;
             border-radius: 50px !important;
-            font-weight: 600 !important;
+            font-weight: 700 !important;
             font-size: 0.95rem !important;
-            border: 1px solid rgba(255, 255, 255, 0.35) !important;
-            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7) !important;
-            transition: all 0.3s ease !important;
+            border: 2px solid rgba(255, 255, 255, 0.4) !important;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important; /* Premium Elastic Pop Out Engine */
             text-transform: uppercase !important;
-            letter-spacing: 0.5px !important;
+            letter-spacing: 0.7px !important;
+            transform: scale(1);
         }
         
+        /* 3D POP OUT ANIMATION EFFECT ON HOVER */
         button[key="right_topics_trigger"]:hover {
-            transform: scale(1.04) !important;
-            box-shadow: 0 0 25px rgba(59, 130, 246, 0.4) !important;
+            transform: scale(1.1) translateY(-2px) !important; /* Pops outward and upwards towards the user */
+            border-color: #ffffff !important;
+            box-shadow: 
+                0 15px 30px rgba(59, 130, 246, 0.4),
+                0 0 25px rgba(6, 182, 212, 0.6) !important;
         }
 
-        /* GIF Animation Pattern A: Continuous Linear Color Sweep */
-        @keyframes kineticGifSweep {
+        /* GIF Animation Logic Block A: Seamless Current Sweep */
+        @keyframes circuitGifSweep {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* GIF Animation Pattern B: Shockwave Pulse Matrix */
-        @keyframes pristineRightPulse {
-            0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
-            70% { box-shadow: 0 0 0 20px rgba(59, 130, 246, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+        /* GIF Animation Logic Block B: Radial Core Waves */
+        @keyframes hardwareShockwave {
+            0% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.7); }
+            70% { box-shadow: 0 0 0 18px rgba(6, 182, 212, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); }
         }
 
         /* Premium Matte Obsidian Glass Panels */
@@ -87,14 +91,20 @@ def apply_semiconductor_theme():
             z-index: 1;
         }
 
-        /* Full Curriculum Overlay Panel Map */
+        /* Dynamic Pop-Out Curricular Sheet Grid Map */
         .curriculum-overlay-map {
             background: rgba(10, 15, 30, 0.96) !important;
-            border: 1px solid rgba(59, 130, 246, 0.25) !important;
+            border: 1px solid rgba(6, 182, 212, 0.3) !important;
             border-radius: 20px;
             padding: 35px;
             margin-bottom: 30px;
-            box-shadow: 0 0 40px rgba(59, 130, 246, 0.15);
+            box-shadow: 0 0 50px rgba(6, 182, 212, 0.15);
+            animation: panelPopFade 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes panelPopFade {
+            0% { transform: scale(0.95); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         /* Silicon Layout Cards */
@@ -109,9 +119,9 @@ def apply_semiconductor_theme():
         }
 
         .silicon-vector-card:hover {
-            border-color: rgba(59, 130, 246, 0.5) !important;
+            border-color: rgba(6, 182, 212, 0.5) !important;
             background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.5)) !important;
-            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.2);
+            box-shadow: 0 15px 35px rgba(6, 182, 212, 0.2);
             transform: translateY(-5px);
         }
 
@@ -149,8 +159,6 @@ def apply_semiconductor_theme():
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
         }
 
-        [data-testid="stSidebar"] { visibility: hidden !important; width: 0px !important; }
-        
         textarea {
             background-color: rgba(30, 41, 59, 0.4) !important;
             border: 1px solid rgba(255, 255, 255, 0.08) !important;
