@@ -2,34 +2,35 @@ import streamlit as st
 
 def apply_semiconductor_theme():
     """
-    Injects a real-time mathematical physics engine canvas calculating 
-    universal falling sand/grain drift dynamically behind the interface.
+    Injects high-end matte obsidian glassmorphic styles and structural 
+    layout overrides to force native layout canvas compliance.
     """
     st.markdown("""
         <style>
+        /* Base typography setup */
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;800&family=JetBrains+Mono:wght@300;500&display=swap');
 
-        /* FORCE STREAMLIT TRANSPARENCY: Allows the canvas math layer to peek through everywhere */
+        /* Force transparency across default content sheets so canvas shows behind them */
         html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"], [data-testid="stSidebar"] {
             background: transparent !important;
             color: #f3f4f6 !important;
             font-family: 'Plus Jakarta Sans', sans-serif !important;
         }
 
-        /* Fixed Background Wrapper Layer */
+        /* Fixed Math Engine Layer Blueprint */
         .math-universe-bg {
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
-            background-color: #02040a; /* True deep space silicon black baseline */
+            background-color: #02040a;
             z-index: -3;
         }
         
         #MainMenu, footer, header {visibility: hidden;}
 
-        /* Matte Obsidian Glass Panel Container */
+        /* Matte Obsidian Glass Panel Containers */
         .glass-panel {
-            background: rgba(10, 15, 30, 0.78);
+            background: rgba(10, 15, 30, 0.82);
             border: 1px solid rgba(255, 255, 255, 0.07);
             border-radius: 24px;
             padding: 40px;
@@ -40,9 +41,9 @@ def apply_semiconductor_theme():
             z-index: 1;
         }
 
-        /* Architectural Phase Selection Cards */
+        /* Industrial Interactive Phase Layout Cards */
         .silicon-vector-card {
-            background: linear-gradient(145deg, rgba(17, 24, 39, 0.6), rgba(31, 41, 55, 0.3));
+            background: linear-gradient(145deg, rgba(17, 24, 39, 0.65), rgba(31, 41, 55, 0.35));
             border: 1px solid rgba(255, 255, 255, 0.04);
             border-radius: 20px;
             padding: 28px;
@@ -73,9 +74,9 @@ def apply_semiconductor_theme():
             line-height: 1.6;
         }
 
-        /* Monospace Command Evaluation Terminal Console */
+        /* Monospace AI Terminal Box */
         .terminal-box {
-            background: rgba(1, 3, 9, 0.9);
+            background: rgba(1, 3, 9, 0.92);
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 20px;
             padding: 24px;
@@ -84,7 +85,7 @@ def apply_semiconductor_theme():
             box-shadow: inset 0 4px 20px rgba(0,0,0,0.9);
         }
 
-        /* Solid Luxury Interface Buttons */
+        /* Solid Interface Action Buttons */
         .stButton>button {
             background: #ffffff !important;
             color: #02040a !important;
@@ -101,9 +102,9 @@ def apply_semiconductor_theme():
             box-shadow: 0 12px 30px rgba(255, 255, 255, 0.3) !important;
         }
 
-        /* Sidebar Glass Styling Override */
+        /* Persistent Sidebar Masking Configuration */
         [data-testid="stSidebar"] {
-            background-color: rgba(4, 7, 15, 0.85) !important;
+            background-color: rgba(4, 7, 15, 0.9) !important;
             border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
             backdrop-filter: blur(15px);
         }
@@ -115,68 +116,4 @@ def apply_semiconductor_theme():
             border-radius: 12px !important;
         }
         </style>
-
-        <div class="math-universe-bg">
-            <canvas id="sandMatrixCanvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-2; pointer-events:none;"></canvas>
-        </div>
-
-        <script>
-        (function() {
-            const canvas = document.getElementById('sandMatrixCanvas');
-            const ctx = canvas.getContext('2d');
-            
-            function resize() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-            window.addEventListener('resize', resize);
-            resize();
-
-            // Mathematical Physics Constants: Density, acceleration drift vectors
-            const grainCount = 130;
-            const gravitationalPull = 0.015;
-            const windDriftFactor = -0.04;
-            const grains = [];
-
-            // Instantiate randomized matrix node variables (Coordinates and densities)
-            for (let i = 0; i < grainCount; i++) {
-                grains.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    size: 1 + Math.random() * 2,
-                    terminalVelocity: 0.4 + Math.random() * 1.1,
-                    massAlpha: 0.15 + Math.random() * 0.35,
-                    colorBand: Math.random() > 0.4 ? 'rgba(59, 130, 246,' : 'rgba(14, 165, 233,'
-                });
-            }
-
-            function processPhysicsEngine() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                for (let i = 0; i < grainCount; i++) {
-                    let g = grains[i];
-                    
-                    // Render particle node coordinate vectors
-                    ctx.beginPath();
-                    ctx.fillStyle = g.colorBand + g.massAlpha + ')';
-                    ctx.arc(g.x, g.y, g.size, 0, Math.PI * 2, true);
-                    ctx.fill();
-                    
-                    // Apply kinematic delta additions over time loop step
-                    g.y += g.terminalVelocity;
-                    g.x += windDriftFactor;
-                    g.terminalVelocity += gravitationalPull;
-
-                    // Bound limit resetting loops: regenerates particle back at y=0 when boundary breaks
-                    if (g.y > canvas.height) {
-                        g.x = Math.random() * canvas.width;
-                        g.y = -10;
-                        g.terminalVelocity = 0.4 + Math.random() * 1.1;
-                    }
-                }
-                requestAnimationFrame(processPhysicsEngine);
-            }
-            processPhysicsEngine();
-        })();
-        </script>
     """, unsafe_allow_html=True)
