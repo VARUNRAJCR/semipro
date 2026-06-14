@@ -3,13 +3,13 @@ import streamlit as st
 def apply_semiconductor_theme():
     """
     Injects matte obsidian glassmorphic styles and customizes the right-aligned
-    pulsing trigger badge to toggle the main topics directory mapping.
+    pulsing trigger to look like an active, animated GIF badge labeled 'Content'.
     """
     st.markdown("""
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;800&family=JetBrains+Mono:wght@300;500&display=swap');
 
-        /* Force transparency across layers so the sand math canvas plays perfectly */
+        /* Force transparency across default content sheets so canvas shows behind them */
         html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"], [data-testid="stSidebar"] {
             background: transparent !important;
             color: #f3f4f6 !important;
@@ -27,34 +27,46 @@ def apply_semiconductor_theme():
         
         #MainMenu, footer, header {visibility: hidden;}
 
-        /* STYLING THE NATIVE INTERACTION TRIGGER ON THE RIGHT SIDE */
+        /* FORCE THE BUTTON CONTAINER TO THE UPPER RIGHT OF THE WINDOW VIEW */
         div.element-container:has(button[key="right_topics_trigger"]) {
             position: fixed !important;
             top: 25px !important;
             right: 40px !important;
+            left: auto !important;
             z-index: 999999 !important;
             width: auto !important;
         }
 
+        /* DIGITAL KINETIC GIF EMULATION STYLING RULES */
         button[key="right_topics_trigger"] {
-            background: linear-gradient(135deg, #1e40af, #3b82f6) !important;
+            background: linear-gradient(270deg, #1e40af, #3b82f6, #0284c7, #1e40af) !important;
+            background-size: 600% 600% !important;
+            animation: kineticGifSweep 4s linear infinite, pristineRightPulse 2s infinite cubic-bezier(0.66, 0, 0, 1) !important;
             color: #ffffff !important;
-            padding: 12px 26px !important;
+            padding: 12px 30px !important;
             border-radius: 50px !important;
             font-weight: 600 !important;
             font-size: 0.95rem !important;
-            border: 1px solid rgba(255, 255, 255, 0.25) !important;
+            border: 1px solid rgba(255, 255, 255, 0.35) !important;
             box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7) !important;
-            animation: pristineRightPulse 2s infinite cubic-bezier(0.66, 0, 0, 1) !important;
             transition: all 0.3s ease !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
         }
         
         button[key="right_topics_trigger"]:hover {
             transform: scale(1.04) !important;
-            background: linear-gradient(135deg, #2563eb, #60a5fa) !important;
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.4) !important;
         }
 
-        /* Right Side Kinetic Pulse Animation */
+        /* GIF Animation Pattern A: Continuous Linear Color Sweep */
+        @keyframes kineticGifSweep {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* GIF Animation Pattern B: Shockwave Pulse Matrix */
         @keyframes pristineRightPulse {
             0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
             70% { box-shadow: 0 0 0 20px rgba(59, 130, 246, 0); }
@@ -77,12 +89,12 @@ def apply_semiconductor_theme():
 
         /* Full Curriculum Overlay Panel Map */
         .curriculum-overlay-map {
-            background: rgba(10, 15, 30, 0.95) !important;
-            border: 1px solid rgba(59, 130, 246, 0.2) !important;
+            background: rgba(10, 15, 30, 0.96) !important;
+            border: 1px solid rgba(59, 130, 246, 0.25) !important;
             border-radius: 20px;
-            padding: 30px;
+            padding: 35px;
             margin-bottom: 30px;
-            box-shadow: 0 0 40px rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.15);
         }
 
         /* Silicon Layout Cards */
