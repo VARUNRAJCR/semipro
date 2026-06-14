@@ -4,10 +4,11 @@ from google import genai
 from google.genai import types
 
 # ==========================================
-# 1. CORE SYSTEM SETUP & SECURE KEYS
+# 1. CORE SYSTEM CONFIGURATION
 # ==========================================
 st.set_page_config(page_title="SemiPro | Semiconductor Architecture", layout="wide")
 
+# Persistent page state initialization
 if "current_page" not in st.session_state:
     st.session_state.current_page = "Home Dashboard"
 if "chat_history" not in st.session_state:
@@ -17,26 +18,34 @@ if "GEMINI_API_KEY" in st.secrets:
     os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
 
 # ==========================================
-# 2. THE HIGH-END CLASSIC VISUAL LAYER
+# 2. NATIVE UNBREAKABLE MOTION BACKGROUND & CSS
 # ==========================================
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono:wght@300;500&display=swap');
 
-    /* Lock down dark minimalist canvas background */
+    /* Native CSS Animated Shifting Gradient Background (No JavaScript required) */
     html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
-        background-color: #030611 !important;
+        background: linear-gradient(125deg, #020512, #070f26, #020512, #0b1536) !important;
+        background-size: 400% 400% !important;
+        animation: universalGradientMotion 15s ease infinite !important;
         color: #f3f4f6 !important;
         font-family: 'Plus Jakarta Sans', sans-serif !important;
+    }
+
+    @keyframes universalGradientMotion {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
     }
     
     /* Remove native white-label blockades */
     #MainMenu, footer, header {visibility: hidden;}
 
-    /* Glassmorphic main visual viewport panel */
+    /* Glassmorphic main visual panel */
     .glass-panel {
-        background: rgba(11, 17, 34, 0.8);
-        border: 1px solid rgba(255, 255, 255, 0.07);
+        background: rgba(11, 17, 34, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 24px;
         padding: 40px;
         backdrop-filter: blur(20px);
@@ -47,8 +56,8 @@ st.markdown("""
 
     /* Premium Silicon Vector Track Cards */
     .vector-card {
-        background: rgba(22, 30, 49, 0.45);
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        background: rgba(22, 30, 49, 0.55);
+        border: 1px solid rgba(255, 255, 255, 0.06);
         border-radius: 16px;
         padding: 32px;
         transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
@@ -57,9 +66,9 @@ st.markdown("""
     }
 
     .vector-card:hover {
-        border-color: rgba(59, 130, 246, 0.4);
-        background: rgba(22, 30, 49, 0.7);
-        box-shadow: 0 15px 35px rgba(59, 130, 246, 0.15);
+        border-color: rgba(59, 130, 246, 0.5);
+        background: rgba(22, 30, 49, 0.8);
+        box-shadow: 0 15px 35px rgba(59, 130, 246, 0.2);
         transform: translateY(-4px);
     }
 
@@ -72,13 +81,7 @@ st.markdown("""
         letter-spacing: -0.5px;
     }
 
-    .vector-card p {
-        color: #9ca3af;
-        font-size: 0.95rem;
-        line-height: 1.6;
-    }
-
-    /* AI System Command Input Console box */
+    /* AI Console Box */
     .terminal-box {
         background: #01040a;
         border: 1px solid rgba(255, 255, 255, 0.05);
@@ -88,7 +91,7 @@ st.markdown("""
         margin-bottom: 15px;
     }
 
-    /* Premium Minimalist Interface Buttons */
+    /* Premium Interface Buttons */
     .stButton>button {
         background: #ffffff !important;
         color: #030611 !important;
@@ -102,161 +105,138 @@ st.markdown("""
 
     .stButton>button:hover {
         transform: scale(1.02) !important;
-        box-shadow: 0 0 25px rgba(255, 255, 255, 0.3) !important;
+        box-shadow: 0 0 25px rgba(255, 255, 255, 0.35) !important;
     }
 
-    /* High-End Sidebar Alignment Overrides */
+    /* High-End Sidebar Overrides */
     [data-testid="stSidebar"] {
-        background-color: #060a17 !important;
-        border-right: 1px solid rgba(255, 255, 255, 0.04) !important;
+        background-color: #050917 !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
     }
     </style>
-
-    <canvas id="sandUniverseCanvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-1; pointer-events:none;"></canvas>
-
-    <script>
-    (function() {
-        const canvas = document.getElementById('sandUniverseCanvas');
-        const ctx = canvas.getContext('2d');
-        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resize); resize();
-
-        const particleCount = 140;
-        const gravitationalPull = 0.025;
-        const horizontalDrift = -0.05;
-        const particles = [];
-
-        for (let i = 0; i < particleCount; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                radius: 1 + Math.random() * 1.8,
-                densitySpeed: 0.3 + Math.random() * 1.2,
-                opacity: 0.15 + Math.random() * 0.35,
-                color: Math.random() > 0.4 ? 'rgba(59, 130, 246,' : 'rgba(14, 165, 233,'
-            });
-        }
-
-        function animateSandUniverse() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particleCount; i++) {
-                let p = particles[i];
-                ctx.beginPath();
-                ctx.fillStyle = p.color + p.opacity + ')';
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2, true);
-                ctx.fill();
-                
-                p.y += p.densitySpeed;
-                p.x += horizontalDrift;
-                p.densitySpeed += gravitationalPull;
-
-                if (p.y > canvas.height) {
-                    p.x = Math.random() * canvas.width;
-                    p.y = -10;
-                    p.densitySpeed = 0.3 + Math.random() * 1.2;
-                }
-            }
-            requestAnimationFrame(animateSandUniverse);
-        }
-        animateSandUniverse();
-    })();
-    </script>
     """, unsafe_allow_html=True)
 
 # ==========================================
-# 3. THE INTEGRATED NAVIGATION SIDEBAR
+# 3. GLOBAL ROUTING OVERLAY (PERSISTENT SIDEBAR)
 # ==========================================
 with st.sidebar:
     st.markdown("<h2 style='font-weight:800; font-size:1.75rem; color:#ffffff; letter-spacing:-1px; margin-bottom:0;'>SemiPro</h2>", unsafe_allow_html=True)
     st.markdown("<p style='color:#6b7280; font-size:0.85rem; margin-top:2px; letter-spacing:0.5px;'>Silicon Engineering Academy</p>", unsafe_allow_html=True)
     st.write("---")
     
+    # Complete 8-Module Expanded Engineering Sequence Architecture Map
     navigation_vector = [
         "Home Dashboard", 
-        "Phase 1: Silicon Foundations", 
-        "Phase 2: Circuit Logic Matrix", 
-        "Phase 3: Physical Automation"
+        "Module 1: CMOS Transistor Mechanics", 
+        "Module 2: The CMOS Inverter & VTC",
+        "Module 3: Combinational Gate Design",
+        "Module 4: Sequential Elements & Delay",
+        "Module 5: Logic Synthesis & SDC",
+        "Module 6: Static Timing Analysis",
+        "Module 7: Floorplanning & Placement",
+        "Module 8: Clock Tree Synthesis & Routing"
     ]
     
-    current_index = navigation_vector.index(st.session_state.current_page)
-    selected_sidebar_page = st.radio("Academy Navigation Vector:", navigation_vector, index=current_index)
+    # Dynamically find index to guarantee safety if state jumps inside workspace
+    if st.session_state.current_page in navigation_vector:
+        current_index = navigation_vector.index(st.session_state.current_page)
+    else:
+        current_index = 0
+        
+    selected_sidebar_page = st.radio("System Execution Tracks:", navigation_vector, index=current_index)
     
     if selected_sidebar_page != st.session_state.current_page:
         st.session_state.current_page = selected_sidebar_page
         st.rerun()
 
 # ==========================================
-# 4. MAIN CENTRAL WINDOW PANEL ARCHITECTURE
+# 4. MAIN ACTION INTERFACE ROUTING
 # ==========================================
 st.markdown("<div class='glass-panel'>", unsafe_allow_html=True)
 
-# DASHBOARD LAYER
+# DASHBOARD CONTROLLER LAYER
 if st.session_state.current_page == "Home Dashboard":
-    st.markdown("<h1 style='font-weight:800; font-size:2.8rem; letter-spacing:-1.5px; color:#ffffff; margin-bottom:8px;'>SemiPro Portal</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='font-size:1.15rem; color:#9ca3af; font-weight:300; margin-bottom:40px;'>Master modern semiconductor integration tracks systematically from raw transistor logic up to sign-off tapeout.</p>", unsafe_allow_html=True)
+    st.markdown("<h1 style='font-weight:800; font-size:2.8rem; letter-spacing:-1.5px; color:#ffffff; margin-bottom:8px;'>SemiPro Academy</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='font-size:1.15rem; color:#9ca3af; font-weight:300; margin-bottom:40px;'>An elite, unstructured physical design knowledge tree, mapped from absolute scratch to sign-off tapeout.</p>", unsafe_allow_html=True)
+    
+    st.subheader("Launch Workspace Pipelines")
     
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown("<div class='vector-card'><h3>Phase 1: Silicon Foundations</h3><p>Isolate NMOS/PMOS transistor switching physics, threshold shift variance metrics, and mathematical operational curve boundaries.</p></div>", unsafe_allow_html=True)
-        if st.button("Enter Phase 1 Workspace", use_container_width=True): 
-            st.session_state.current_page = "Phase 1: Silicon Foundations"
+        st.markdown("<div class='vector-card'><h3>Module 1: CMOS Mechanics</h3><p>Isolate NMOS/PMOS transistor operational physics, threshold variances, and saturation current calculation boundaries.</p></div>", unsafe_allow_html=True)
+        if st.button("Open Module 1 Workspace", use_container_width=True): 
+            st.session_state.current_page = "Module 1: CMOS Transistor Mechanics"
             st.rerun()
+            
     with col2:
-        st.markdown("<div class='vector-card'><h3>Phase 2: Circuit Logic Matrix</h3><p>Map complex combinational gates, optimize structural network pathways via logical effort formulas, and solve flip-flop parameters.</p></div>", unsafe_allow_html=True)
-        if st.button("Enter Phase 2 Workspace", use_container_width=True): 
-            st.session_state.current_page = "Phase 2: Circuit Logic Matrix"
+        st.markdown("<div class='vector-card'><h3>Module 6: Static Timing Analysis</h3><p>Formulate setup and hold boundaries, track sequential clock uncertainties, and evaluate path slacks systematically.</p></div>", unsafe_allow_html=True)
+        if st.button("Open Module 6 Workspace", use_container_width=True): 
+            st.session_state.current_page = "Module 6: Static Timing Analysis"
             st.rerun()
+            
     with col3:
-        st.markdown("<div class='vector-card'><h3>Phase 3: Physical Automation</h3><p>Process modern industry implementation flows: SDC synthesis execution constraints, multi-corner STA timing slacks, and detailed routing DRC resolution vectors.</p></div>", unsafe_allow_html=True)
-        if st.button("Enter Phase 3 Workspace", use_container_width=True): 
-            st.session_state.current_page = "Phase 3: Physical Automation"
+        st.markdown("<div class='vector-card'><h3>Module 8: CTS & Routing</h3><p>Manage clock networks, isolate insertion delays, minimize clock skew metrics, and route cells around physical layout blockages.</p></div>", unsafe_allow_html=True)
+        if st.button("Open Module 8 Workspace", use_container_width=True): 
+            st.session_state.current_page = "Module 8: Clock Tree Synthesis & Routing"
             st.rerun()
 
-# PHASE WORKSPACES
-elif st.session_state.current_page == "Phase 1: Silicon Foundations":
-    if st.button("⬅️ Return to Main Dashboard", key="b1"): 
+# MODULE VIEWPORTS (With Global Navigation Safe Jumps)
+elif st.session_state.current_page == "Module 1: CMOS Transistor Mechanics":
+    st.markdown("### 🗺️ Navigation Node: You are inside Module 1")
+    if st.button("🏠 Click here to view all modules (Return Home)"):
         st.session_state.current_page = "Home Dashboard"
         st.rerun()
-    st.markdown("<h1 style='font-weight:800; color:#ffffff; margin-top:15px;'>Phase 1: Silicon Foundations</h1>", unsafe_allow_html=True)
+        
     st.write("---")
-    col_content, col_practice = st.columns([1.2, 1.2])
-    with col_content:
-        st.subheader("Physical Semiconductor Formulations")
-        with st.expander("Module 1.1: MOSFET Saturation Parameters", expanded=True):
-            st.write("Analyzing current distribution equations across scaling dielectric thickness boundaries.")
-            st.latex(r"I_{d\_sat} = \frac{1}{2} \mu C_{ox} \frac{W}{L} (V_{gs} - V_{th})^2")
+    st.markdown("<h1>Module 1: CMOS Transistor Mechanics</h1>", unsafe_allow_html=True)
+    st.latex(r"I_{d\_sat} = \frac{1}{2} \mu C_{ox} \frac{W}{L} (V_{gs} - V_{th})^2")
+    st.info("Silicon Foundation parameters initialized. Use the sidebar at any time to hop directly to any other track layer.")
 
-    with col_practice:
-        st.subheader("Interactive Verification Sandbox")
-        st.info("System Diagnostic Input: Given an operational variation increasing gate-oxide scale layers, input the derivative performance shift matching capacitive calculations.")
-        st.text_area("Input technical verification analysis script here:", placeholder="Analyze capacitance derivatives...", key="p1_ans")
-        if st.button("Process Script Verification"):
-            st.success("Telemetry log saved.")
-
-elif st.session_state.current_page == "Phase 2: Circuit Logic Matrix":
-    if st.button("⬅️ Return to Main Dashboard", key="b2"): 
+elif st.session_state.current_page == "Module 6: Static Timing Analysis":
+    st.markdown("### 🗺️ Navigation Node: You are inside Module 6")
+    if st.button("🏠 Click here to view all modules (Return Home)"):
         st.session_state.current_page = "Home Dashboard"
         st.rerun()
-    st.markdown("<h1 style='font-weight:800; color:#ffffff; margin-top:15px;'>Phase 2: Circuit Logic Matrix</h1>", unsafe_allow_html=True)
+        
     st.write("---")
-    st.info("Logic Vector Core online. Awaiting combinational logical effort matrix rules propagation.")
+    st.markdown("<h1>Module 6: Static Timing Analysis (STA)</h1>", unsafe_allow_html=True)
+    st.info("Timing vector analysis engine active. Calculate data arrival slacks or ask questions below.")
 
-elif st.session_state.current_page == "Phase 3: Physical Automation":
-    if st.button("⬅️ Return to Main Dashboard", key="b3"): 
+# MODULE 8 DEEP DEPLOYMENT INTERFACE
+elif st.session_state.current_page == "Module 8: Clock Tree Synthesis & Routing":
+    st.markdown("### 🗺️ Navigation Node: You are inside Module 8")
+    
+    # Accessible Map Quick-Link Button right inside the workspace view
+    if st.button("🏠 Click here to view all modules (Return Home)"):
         st.session_state.current_page = "Home Dashboard"
         st.rerun()
-    st.markdown("<h1 style='font-weight:800; color:#ffffff; margin-top:15px;'>Phase 3: Physical Implementation</h1>", unsafe_allow_html=True)
+        
     st.write("---")
-    st.info("RTL-to-GDSII structural layout track interface loaded. SDC constraint mapping algorithms ready.")
+    st.markdown("<h1>Module 8: Clock Tree Synthesis & Routing</h1>", unsafe_allow_html=True)
+    st.markdown("#### Physical Layout Routing Core")
+    st.write("""
+    * **Clock Distribution Structure:** Balancing H-Tree, Trunk, and clock mesh layouts to compress global skew windows.
+    * **Routing Optimization Matrix:** Eliminating signal integrity cross-coupling noise parameters ($C_{crosstalk}$) via shield tracks.
+    """)
+    st.success("Module 8 Core Online. The persistent sidebar on the left lets you view or switch modules instantly at any time.")
+
+# FALLBACK HOOKS FOR INTERMEDIARY MODULES
+else:
+    st.markdown("### 🗺️ Navigation Node")
+    if st.button("🏠 Click here to view all modules (Return Home)"):
+        st.session_state.current_page = "Home Dashboard"
+        st.rerun()
+    st.write("---")
+    st.markdown(f"<h1>{st.session_state.current_page}</h1>", unsafe_allow_html=True)
+    st.info("Workspace environment online. Content matrix layer ready for textbook data stream mapping injections.")
 
 st.markdown("</div>", unsafe_allow_html=True)
 
 # ==========================================
-# 5. INTEGRATED INTERACTIVE COACH (CHATBOT)
+# 5. INTEGRATED INTERACTIVE AI TERMINAL CHAT
 # ==========================================
 st.write("---")
-st.markdown("<h3 style='font-weight:600; color:#ffffff; font-size:1.2rem; letter-spacing:-0.5px;'>🎛️ Real-Time Silicon AI Evaluation Engine</h3>", unsafe_allow_html=True)
-st.caption("Ask technical questions on CMOS scaling, Logical Effort networks, or SDC syntax parameters for immediate analytical evaluation.")
+st.markdown("<h3 style='font-weight:600; color:#ffffff; font-size:1.2rem; letter-spacing:-0.5px;'>🎛 ... Real-Time Silicon AI Evaluation Engine</h3>", unsafe_allow_html=True)
 
 st.markdown("<div class='terminal-box'>", unsafe_allow_html=True)
 for chat in st.session_state.chat_history:
@@ -274,7 +254,7 @@ if st.button("Execute Chat Query Pipeline"):
         with st.spinner("Processing telemetry analysis vectors..."):
             try:
                 client = genai.Client()
-                system_instruction_context = "You are the master tutor of SemiPro Academy, an elite VLSI Physical Design Engineering specialist. Never use emojis. Keep explanations crisp and structured."
+                system_instruction_context = "You are the master tutor of SemiPro Academy, an elite VLSI Physical Design Engineering specialist. Never use emojis. Keep explanations crisp, professional, and structured."
                 response = client.models.generate_content(
                     model='gemini-2.5-flash',
                     contents=chat_query,
