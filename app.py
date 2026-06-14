@@ -23,13 +23,13 @@ if "chat_history" not in st.session_state: st.session_state.chat_history = []
 if "GEMINI_API_KEY" in st.secrets:
     os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
 
-# Apply layouts from separate style file module
+# Apply styles from separate style file module
 apply_semiconductor_theme()
 
 # ==========================================
-# 2. RIGHT-SIDE ALIGNED PULSING INTERACTION TRIGGER
+# 2. RIGHT-SIDE ALIGNED PULSING "CONTENT" TRIGGER
 # ==========================================
-trigger_label = "Close Topics Panel ✕" if st.session_state.show_topics_menu else "click here for topics <<"
+trigger_label = "Close Content ✕" if st.session_state.show_topics_menu else "Content ☰"
 if st.button(trigger_label, key="right_topics_trigger"):
     st.session_state.show_topics_menu = not st.session_state.show_topics_menu
     st.rerun()
@@ -96,42 +96,42 @@ st.markdown("""
 # ==========================================
 if st.session_state.show_topics_menu:
     st.markdown("<div class='curriculum-overlay-map'>", unsafe_allow_html=True)
-    st.markdown("<h2 style='color:#ffffff; font-weight:800; margin-top:0;'>📚 SemiPro Academy Master Map</h2>", unsafe_allow_html=True)
-    st.write("Click on any phase below to open its engineering workspace:")
+    st.markdown("<h2 style='color:#ffffff; font-weight:800; margin-top:0;'>📚 SemiPro Master Content Map</h2>", unsafe_allow_html=True)
+    st.write("Select any phase below to display its active curriculum matrix module block:")
     
     col_p1, col_p2, col_p3, col_p4, col_p5 = st.columns(5)
     with col_p1:
         st.markdown("<h4 style='color:#3b82f6; margin-bottom:5px;'>Phase 1: CMOS</h4>", unsafe_allow_html=True)
         st.caption("• NMOS/PMOS Physics\n\n• Current Equations\n\n• Inverter VTC\n\n• Sub-Micron Leaks")
-        if st.button("Jump to Phase 1", key="jump_p1"):
+        if st.button("Open Phase 1", key="jump_p1"):
             st.session_state.current_page = "Phase 1: CMOS Deep Dive"
             st.session_state.show_topics_menu = False
             st.rerun()
     with col_p2:
         st.markdown("<h4 style='color:#3b82f6; margin-bottom:5px;'>Phase 2: Digital</h4>", unsafe_allow_html=True)
         st.caption("• CMOS Gate Logic\n\n• Logical Effort Math\n\n• Sequential Elements\n\n• Metastability")
-        if st.button("Jump to Phase 2", key="jump_p2"):
+        if st.button("Open Phase 2", key="jump_p2"):
             st.session_state.current_page = "Phase 2: Digital Electronics"
             st.session_state.show_topics_menu = False
             st.rerun()
     with col_p3:
         st.markdown("<h4 style='color:#3b82f6; margin-bottom:5px;'>Phase 3: RTL</h4>", unsafe_allow_html=True)
         st.caption("• Synthesizable Verilog\n\n• FSM Controllers\n\n• CDC Synchronization\n\n• Linting Rules")
-        if st.button("Jump to Phase 3", key="jump_p3"):
+        if st.button("Open Phase 3", key="jump_p3"):
             st.session_state.current_page = "Phase 3: Register Transfer Level"
             st.session_state.show_topics_menu = False
             st.rerun()
     with col_p4:
         st.markdown("<h4 style='color:#3b82f6; margin-bottom:5px;'>Phase 4: Synthesis</h4>", unsafe_allow_html=True)
         st.caption("• Tech Mapping (.lib)\n\n• SDC Clock Syntax\n\n• Input/Output Delays\n\n• Wire Load Models")
-        if st.button("Jump to Phase 4", key="jump_p4"):
+        if st.button("Open Phase 4", key="jump_p4"):
             st.session_state.current_page = "Phase 4: Logic Synthesis"
             st.session_state.show_topics_menu = False
             st.rerun()
     with col_p5:
         st.markdown("<h4 style='color:#3b82f6; margin-bottom:5px;'>Phase 5: PD</h4>", unsafe_allow_html=True)
         st.caption("• Floorplan & PNS\n\n• Cell Legalization\n\n• CTS Skew Balancing\n\n• DRC/LVS Sign-off")
-        if st.button("Jump to Phase 5", key="jump_p5"):
+        if st.button("Open Phase 5", key="jump_p5"):
             st.session_state.current_page = "Phase 5: Physical Design"
             st.session_state.show_topics_menu = False
             st.rerun()
