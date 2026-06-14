@@ -2,14 +2,15 @@ import streamlit as st
 
 def apply_semiconductor_theme():
     """
-    Restores the high-end matte glass styles, the native sand physics backplane,
-    and the kinetic pulsing 'click here for topics' drawer trigger.
+    Injects high-end matte obsidian glassmorphic styles, sets layout transparency,
+    and displays the floating pulsing 'click here for topics' badge cleanly.
     """
+    # 1. PURE STYLING SHEET LAYER
     st.markdown("""
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;800&family=JetBrains+Mono:wght@300;500&display=swap');
 
-        /* Force deep layout transparency so the sand math canvas plays perfectly */
+        /* Force transparency so the mathematical canvas displays perfectly */
         html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
             background: transparent !important;
             color: #f3f4f6 !important;
@@ -27,7 +28,7 @@ def apply_semiconductor_theme():
         
         #MainMenu, footer, header {visibility: hidden;}
 
-        /* RESTORED: THE HIGH-END ANIMATED KINETIC TRIGGER BADGE */
+        /* THE HIGH-END ANIMATED KINETIC TRIGGER BADGE */
         .custom-topics-trigger {
             position: fixed !important;
             top: 25px;
@@ -52,7 +53,7 @@ def apply_semiconductor_theme():
             background: linear-gradient(135deg, #2563eb, #60a5fa) !important;
         }
 
-        /* The Beautiful Pulse Wave GIF Motion Effect */
+        /* Kinetic Pulse Wave Motion Effect */
         @keyframes pristinePulseWave {
             0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
             70% { box-shadow: 0 0 0 20px rgba(59, 130, 246, 0); }
@@ -73,7 +74,7 @@ def apply_semiconductor_theme():
             z-index: 1;
         }
 
-        /* High-End Vector Track Layout Cards */
+        /* Vector Layout Cards */
         .silicon-vector-card {
             background: linear-gradient(145deg, rgba(30, 41, 59, 0.45), rgba(15, 23, 42, 0.35)) !important;
             border: 1px solid rgba(255, 255, 255, 0.05) !important;
@@ -105,6 +106,7 @@ def apply_semiconductor_theme():
             line-height: 1.6;
         }
 
+        /* Chatbot Console Container */
         .terminal-box {
             background: rgba(15, 23, 42, 0.65) !important;
             border: 1px solid rgba(255, 255, 255, 0.06) !important;
@@ -125,7 +127,7 @@ def apply_semiconductor_theme():
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
         }
 
-        /* Slide-Out Drawer Custom Sidebar Layouts */
+        /* Slide-Out Navigation Drawer */
         [data-testid="stSidebar"] {
             background-color: rgba(10, 15, 30, 0.96) !important;
             border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -140,24 +142,25 @@ def apply_semiconductor_theme():
             border-radius: 12px !important;
         }
         </style>
+    """, unsafe_allow_html=True)
 
-        /* RESTORED TRIGGER OVERLAY & CLICK COMMUNICATIONS SCRIPT */
+    # 2. RAW HTML & JAVASCRIPT LAYER (Isolated completely from the style blocks)
+    html_elements_script = """
         <div class="custom-topics-trigger" onclick="openSidebarDrawerLoop()">click here for topics &lt;&lt;</div>
 
         <script>
         function openSidebarDrawerLoop() {
-            // Find the native hidden sidebar button hook inside Streamlit and execute click sequence
             const nativeButton = window.parent.document.querySelector('button[aria-label="Open sidebar"]') || 
                                  window.document.querySelector('button[aria-label="Open sidebar"]') ||
                                  window.parent.document.querySelector('[data-testid="stSidebarCollapseButton"]');
             if (nativeButton) {
                 nativeButton.click();
             } else {
-                // Alternately reveal sidebar block directly if wrapper behaves aggressively
                 const sidebar = window.parent.document.querySelector('[data-testid="stSidebar"]');
                 if (sidebar) sidebar.style.transform = "translateX(0)";
             }
         }
         </script>
-    """, unsafe_allow_html=True)
-    
+    """
+    # Force execution without allowing Streamlit to draw an empty layout block
+    st.components.v1.html(html_elements_script, height=0, width=0)
