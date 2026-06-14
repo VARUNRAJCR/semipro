@@ -22,8 +22,27 @@ if "chat_history" not in st.session_state: st.session_state.chat_history = []
 if "GEMINI_API_KEY" in st.secrets:
     os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
 
-# Apply layouts from your style file module
+# Apply layouts from your separate style module
 apply_semiconductor_theme()
+
+# INJECT THE PLUSH FLOATING TOPIC TRIGGER DIRECTLY AT THE ROOT BASE LAYER
+st.markdown("""
+    <div class="custom-topics-trigger" onclick="openSidebarDrawerLoop()">click here for topics &lt;&lt;</div>
+
+    <script>
+    function openSidebarDrawerLoop() {
+        const nativeButton = window.parent.document.querySelector('button[aria-label="Open sidebar"]') || 
+                             window.document.querySelector('button[aria-label="Open sidebar"]') ||
+                             window.parent.document.querySelector('[data-testid="stSidebarCollapseButton"]');
+        if (nativeButton) {
+            nativeButton.click();
+        } else {
+            const sidebar = window.parent.document.querySelector('[data-testid="stSidebar"]');
+            if (sidebar) sidebar.style.transform = "translateX(0)";
+        }
+    }
+    </script>
+""", unsafe_allow_html=True)
 
 # ==========================================
 # 2. NATIVE MATHEMATICAL BACKGROUND CANVAS
