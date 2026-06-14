@@ -12,40 +12,30 @@ import phase4
 import phase5
 
 # ==========================================
-# 1. HARDWARE SYSTEM CORE SETUPS
+# 1. APPLICATION DATA INITIALIZATION
 # ==========================================
-st.set_page_config(page_title="SemiPro | Semiconductor Workspace", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="SemiPro | Semiconductor Workspace", layout="wide")
 
+if "show_topics_menu" not in st.session_state: st.session_state.show_topics_menu = False
 if "current_page" not in st.session_state: st.session_state.current_page = "Home Dashboard"
 if "chat_history" not in st.session_state: st.session_state.chat_history = []
 
 if "GEMINI_API_KEY" in st.secrets:
     os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
 
-# Apply layouts from your separate style module
+# Apply layouts from separate style file module
 apply_semiconductor_theme()
 
-# INJECT THE PLUSH FLOATING TOPIC TRIGGER DIRECTLY AT THE ROOT BASE LAYER
-st.markdown("""
-    <div class="custom-topics-trigger" onclick="openSidebarDrawerLoop()">click here for topics &lt;&lt;</div>
-
-    <script>
-    function openSidebarDrawerLoop() {
-        const nativeButton = window.parent.document.querySelector('button[aria-label="Open sidebar"]') || 
-                             window.document.querySelector('button[aria-label="Open sidebar"]') ||
-                             window.parent.document.querySelector('[data-testid="stSidebarCollapseButton"]');
-        if (nativeButton) {
-            nativeButton.click();
-        } else {
-            const sidebar = window.parent.document.querySelector('[data-testid="stSidebar"]');
-            if (sidebar) sidebar.style.transform = "translateX(0)";
-        }
-    }
-    </script>
-""", unsafe_allow_html=True)
+# ==========================================
+# 2. RIGHT-SIDE ALIGNED PULSING INTERACTION TRIGGER
+# ==========================================
+trigger_label = "Close Topics Panel ✕" if st.session_state.show_topics_menu else "click here for topics <<"
+if st.button(trigger_label, key="right_topics_trigger"):
+    st.session_state.show_topics_menu = not st.session_state.show_topics_menu
+    st.rerun()
 
 # ==========================================
-# 2. NATIVE MATHEMATICAL BACKGROUND CANVAS
+# 3. NATIVE MATHEMATICAL BACKGROUND CANVAS
 # ==========================================
 st.markdown("""
     <div class="math-universe-bg">
@@ -102,37 +92,59 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# 3. TRANSITION SELECTION SIDEBAR DRAWER
+# 4. ACTIVE DYNAMIC TOPICS INTERACTIVE PANEL
 # ==========================================
-with st.sidebar:
-    st.markdown("<br><br><br>", unsafe_allow_html=True)
-    st.markdown("<h2 style='font-weight:800; font-size:1.85rem; color:#ffffff; letter-spacing:-1px; margin-bottom:0;'>SemiPro</h2>", unsafe_allow_html=True)
-    st.markdown("<p style='color:#64748b; font-size:0.85rem; font-weight:500; margin-top:2px;'>Silicon Engineering Academy</p>", unsafe_allow_html=True)
-    st.write("---")
+if st.session_state.show_topics_menu:
+    st.markdown("<div class='curriculum-overlay-map'>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color:#ffffff; font-weight:800; margin-top:0;'>📚 SemiPro Academy Master Map</h2>", unsafe_allow_html=True)
+    st.write("Click on any phase below to open its engineering workspace:")
     
-    navigation_vector = [
-        "Home Dashboard", 
-        "Phase 1: CMOS Deep Dive", 
-        "Phase 2: Digital Electronics",
-        "Phase 3: Register Transfer Level",
-        "Phase 4: Logic Synthesis",
-        "Phase 5: Physical Design"
-    ]
-    
-    current_index = navigation_vector.index(st.session_state.current_page) if st.session_state.current_page in navigation_vector else 0
-    selected_sidebar_page = st.radio("Jump to Phase or Module:", navigation_vector, index=current_index)
-    
-    if selected_sidebar_page != st.session_state.current_page:
-        st.session_state.current_page = selected_sidebar_page
-        st.rerun()
+    col_p1, col_p2, col_p3, col_p4, col_p5 = st.columns(5)
+    with col_p1:
+        st.markdown("<h4 style='color:#3b82f6; margin-bottom:5px;'>Phase 1: CMOS</h4>", unsafe_allow_html=True)
+        st.caption("• NMOS/PMOS Physics\n\n• Current Equations\n\n• Inverter VTC\n\n• Sub-Micron Leaks")
+        if st.button("Jump to Phase 1", key="jump_p1"):
+            st.session_state.current_page = "Phase 1: CMOS Deep Dive"
+            st.session_state.show_topics_menu = False
+            st.rerun()
+    with col_p2:
+        st.markdown("<h4 style='color:#3b82f6; margin-bottom:5px;'>Phase 2: Digital</h4>", unsafe_allow_html=True)
+        st.caption("• CMOS Gate Logic\n\n• Logical Effort Math\n\n• Sequential Elements\n\n• Metastability")
+        if st.button("Jump to Phase 2", key="jump_p2"):
+            st.session_state.current_page = "Phase 2: Digital Electronics"
+            st.session_state.show_topics_menu = False
+            st.rerun()
+    with col_p3:
+        st.markdown("<h4 style='color:#3b82f6; margin-bottom:5px;'>Phase 3: RTL</h4>", unsafe_allow_html=True)
+        st.caption("• Synthesizable Verilog\n\n• FSM Controllers\n\n• CDC Synchronization\n\n• Linting Rules")
+        if st.button("Jump to Phase 3", key="jump_p3"):
+            st.session_state.current_page = "Phase 3: Register Transfer Level"
+            st.session_state.show_topics_menu = False
+            st.rerun()
+    with col_p4:
+        st.markdown("<h4 style='color:#3b82f6; margin-bottom:5px;'>Phase 4: Synthesis</h4>", unsafe_allow_html=True)
+        st.caption("• Tech Mapping (.lib)\n\n• SDC Clock Syntax\n\n• Input/Output Delays\n\n• Wire Load Models")
+        if st.button("Jump to Phase 4", key="jump_p4"):
+            st.session_state.current_page = "Phase 4: Logic Synthesis"
+            st.session_state.show_topics_menu = False
+            st.rerun()
+    with col_p5:
+        st.markdown("<h4 style='color:#3b82f6; margin-bottom:5px;'>Phase 5: PD</h4>", unsafe_allow_html=True)
+        st.caption("• Floorplan & PNS\n\n• Cell Legalization\n\n• CTS Skew Balancing\n\n• DRC/LVS Sign-off")
+        if st.button("Jump to Phase 5", key="jump_p5"):
+            st.session_state.current_page = "Phase 5: Physical Design"
+            st.session_state.show_topics_menu = False
+            st.rerun()
+            
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # ==========================================
-# 4. MAIN CENTRAL CONTENT HUD VIEWPORT
+# 5. MAIN CENTRAL CONTENT HUD VIEWPORT
 # ==========================================
 st.markdown("<div class='glass-panel'>", unsafe_allow_html=True)
 
 if st.session_state.current_page != "Home Dashboard":
-    if st.button("🏠 View All Modules (Return to Main Dashboard)"):
+    if st.button("🏠 View All Phases (Return to Main Dashboard)"):
         st.session_state.current_page = "Home Dashboard"
         st.rerun()
     st.write("---")
@@ -170,7 +182,7 @@ elif st.session_state.current_page == "Phase 5: Physical Design": phase5.render_
 st.markdown("</div>", unsafe_allow_html=True)
 
 # ==========================================
-# 5. INTEGRATED CHATBOT LOOP
+# 6. INTEGRATED CHATBOT LOOP
 # ==========================================
 st.write("---")
 st.markdown("<h3 style='font-weight:600; color:#ffffff; font-size:1.2rem; letter-spacing:-0.5px;'>🎛️ Real-Time Silicon AI Evaluation Engine</h3>", unsafe_allow_html=True)
