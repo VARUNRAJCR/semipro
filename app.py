@@ -12,9 +12,9 @@ import phase4
 import phase5
 
 # ==========================================
-# 1. APPLICATION INITIALIZATION
+# 1. APPLICATION SETUP & STATE ENGINE
 # ==========================================
-st.set_page_config(page_title="SemiPro | Semiconductor Workspace", layout="wide")
+st.set_page_config(page_title="SemiPro | Semiconductor Workspace", layout="wide", initial_sidebar_state="collapsed")
 
 if "current_page" not in st.session_state: st.session_state.current_page = "Home Dashboard"
 if "chat_history" not in st.session_state: st.session_state.chat_history = []
@@ -22,11 +22,11 @@ if "chat_history" not in st.session_state: st.session_state.chat_history = []
 if "GEMINI_API_KEY" in st.secrets:
     os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
 
-# Apply styles from your independent style module
+# Apply layouts from independent style module
 apply_semiconductor_theme()
 
 # ==========================================
-# 2. NATIVE MATHEMATICAL KINEMATIC BACKPLANE
+# 2. NATIVE MATHEMATICAL BACKGROUND CANVAS
 # ==========================================
 st.markdown("""
     <div class="math-universe-bg">
@@ -83,14 +83,20 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# 3. SMOOTH GLOBAL SIDEBAR (Access any Module/Phase anywhere)
+# 3. GLOWING ATTRACTIVE WAVE TRIGGER NODE
+# ==========================================
+# Injects the visual button overlay with pulse animation
+st.markdown('<div class="floating-trigger">click here for topics &lt;&lt; ☰</div>', unsafe_allow_html=True)
+
+# ==========================================
+# 4. SLIDE-OUT DRAWER OVERLAY (SIDEBAR)
 # ==========================================
 with st.sidebar:
+    st.markdown("<br><br>", unsafe_allow_html=True) # Spacer below the floating action tag
     st.markdown("<h2 style='font-weight:800; font-size:1.85rem; color:#ffffff; letter-spacing:-1px; margin-bottom:0;'>SemiPro</h2>", unsafe_allow_html=True)
     st.markdown("<p style='color:#64748b; font-size:0.85rem; font-weight:500; margin-top:2px;'>Silicon Engineering Academy</p>", unsafe_allow_html=True)
     st.write("---")
     
-    # Fully mapped linear list containing all phases and their structural scopes
     navigation_vector = [
         "Home Dashboard", 
         "Phase 1: CMOS Deep Dive", 
@@ -108,18 +114,17 @@ with st.sidebar:
         st.rerun()
 
 # ==========================================
-# 4. MAIN CENTRAL PANEL DISPLAY VIEWPORT
+# 5. CENTRAL PANEL WORKSPACE VIEWPORT
 # ==========================================
 st.markdown("<div class='glass-panel'>", unsafe_allow_html=True)
 
-# Dynamic quick escape link to change track instantly
+# Dashboard Home link pinned cleanly at base module layers
 if st.session_state.current_page != "Home Dashboard":
-    if st.button("To change track or view modules click here"):
+    if st.button("🏠 View All Modules (Return to Main Dashboard)"):
         st.session_state.current_page = "Home Dashboard"
         st.rerun()
     st.write("---")
 
-# DASHBOARD LAYER
 if st.session_state.current_page == "Home Dashboard":
     st.markdown("<h1 style='font-weight:800; font-size:3rem; letter-spacing:-1.5px; color:#ffffff; margin-bottom:8px;'>SemiPro</h1>", unsafe_allow_html=True)
     st.markdown("<p style='font-size:1.2rem; color:#9ca3af; font-weight:300; margin-bottom:45px;'>Master modern semiconductor integration tracks systematically from raw transistor logic up to sign-off tapeout.</p>", unsafe_allow_html=True)
@@ -144,7 +149,6 @@ if st.session_state.current_page == "Home Dashboard":
         st.markdown("<div class='silicon-vector-card'><h3>Phase 5: Physical Design (PD)</h3><p>Execute full floorplanning grid blocks, balance clock trees, run routing tracks, and sign-off DRC checks.</p></div>", unsafe_allow_html=True)
         if st.button("Open Phase 5 Workspace", use_container_width=True): st.session_state.current_page = "Phase 5: Physical Design"; st.rerun()
 
-# DELEGATE ROUTING TO MODULAR FILES
 elif st.session_state.current_page == "Phase 1: CMOS Deep Dive": phase1.render_phase_1()
 elif st.session_state.current_page == "Phase 2: Digital Electronics": phase2.render_phase_2()
 elif st.session_state.current_page == "Phase 3: Register Transfer Level": phase3.render_phase_3()
@@ -154,7 +158,7 @@ elif st.session_state.current_page == "Phase 5: Physical Design": phase5.render_
 st.markdown("</div>", unsafe_allow_html=True)
 
 # ==========================================
-# 5. INTEGRATED CHATBOT COMPONENT LAYER
+# 6. INTEGRATED EVALUATION TERMINAL COACH
 # ==========================================
 st.write("---")
 st.markdown("<h3 style='font-weight:600; color:#ffffff; font-size:1.2rem; letter-spacing:-0.5px;'>🎛️ Real-Time Silicon AI Evaluation Engine</h3>", unsafe_allow_html=True)
