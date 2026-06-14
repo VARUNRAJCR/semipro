@@ -2,8 +2,8 @@ import streamlit as st
 
 def apply_semiconductor_theme():
     """
-    Injects high-end matte obsidian glassmorphism styles, establishes a transparent layout
-    canvas baseline, and configures the pure HTML/CSS responsive kinetic content button.
+    Injects matte obsidian glassmorphic styles, establishes a transparent layout
+    canvas, and handles the organic ocean-wave cascading menu animation curves.
     """
     st.markdown("""
         <style>
@@ -27,7 +27,7 @@ def apply_semiconductor_theme():
         
         #MainMenu, footer, header {visibility: hidden;}
 
-        /* ABSOLUTE FIXED POSITIONING HUB FOR THE CUSTOM HARDWARE BUTTON */
+        /* FIXED RIGHT WINDOW PLACEMENT NODE FOR CUSTOM INTERACTIVE BADGE */
         .hardware-trigger-container {
             position: fixed !important;
             top: 30px !important;
@@ -35,10 +35,10 @@ def apply_semiconductor_theme():
             z-index: 999999 !important;
         }
 
-        /* HIGH-END POWER-ON KINETIC GIF BUTTON EFFECT */
+        /* HIGH-END METALLIC GIF INTERACTION BUTTON */
         .hardware-wake-btn {
             background: linear-gradient(135deg, #0f172a, #1e293b) !important;
-            color: #06b6d4 !important; /* Premium Cyan text flare */
+            color: #06b6d4 !important;
             border: 2px solid #06b6d4 !important;
             padding: 12px 28px !important;
             border-radius: 50px !important;
@@ -54,7 +54,7 @@ def apply_semiconductor_theme():
             overflow: hidden;
         }
 
-        /* Continuous Ambient Glowing Pulse Wave (Simulates Active GIF Quality) */
+        /* Continuous Ambient Pulse Wave */
         .hardware-wake-btn::after {
             content: '';
             position: absolute;
@@ -69,18 +69,17 @@ def apply_semiconductor_theme():
             100% { transform: scale(1.2); opacity: 0; }
         }
 
-        /* PHONE POWER BUTTON WAKE ACTION (Instant, springy pop-out on hover) */
         .hardware-wake-btn:hover {
             transform: scale(1.08) !important;
             color: #ffffff !important;
-            background: #06b6d4 !important; /* Fills instantly with light */
+            background: #06b6d4 !important;
             box-shadow: 
                 0 0 30px rgba(6, 182, 212, 0.6),
                 0 0 50px rgba(30, 64, 175, 0.4) !important;
             border-color: #ffffff !important;
         }
 
-        /* Clean Glassmorphic Core Panels - NO BLACK BOXES */
+        /* Premium Matte Obsidian Glass Panels */
         .glass-panel {
             background: rgba(15, 23, 42, 0.76) !important;
             border: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -94,21 +93,36 @@ def apply_semiconductor_theme():
             z-index: 1;
         }
 
-        /* POWER-ON POP OUT MENU ANIMATION (Smoothly expands outward like a booting screen) */
+        /* OCEAN WAVE PANEL ANIMATION (Cascades down and expands gracefully like a tidal roll) */
         .curriculum-overlay-map {
-            background: rgba(10, 15, 30, 0.96) !important;
-            border: 1px solid rgba(6, 182, 212, 0.3) !important;
+            background: rgba(10, 15, 30, 0.97) !important;
+            border: 1px solid rgba(6, 182, 212, 0.25) !important;
             border-radius: 24px;
             padding: 35px;
             margin-bottom: 30px;
-            box-shadow: 0 0 60px rgba(6, 182, 212, 0.2);
-            transform-origin: top right;
-            animation: screenPowerOnBoot 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); /* Elastic boot snap */
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(6, 182, 212, 0.1);
+            
+            /* Core ocean curve timing setups */
+            transform-origin: top center;
+            animation: oceanWaveRoll 0.55s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            will-change: transform, opacity, filter;
         }
 
-        @keyframes screenPowerOnBoot {
-            0% { transform: scale(0.3); opacity: 0; filter: brightness(3); }
-            100% { transform: scale(1); opacity: 1; filter: brightness(1); }
+        @keyframes oceanWaveRoll {
+            0% { 
+                transform: translateY(-40px) scaleY(0.4) scaleX(0.96); 
+                opacity: 0; 
+                filter: blur(8px) brightness(1.5); 
+            }
+            60% {
+                transform: translateY(4px) scaleY(1.02) scaleX(1.01);
+                filter: blur(0px) brightness(1.1);
+            }
+            100% { 
+                transform: translateY(0) scaleY(1) scaleX(1); 
+                opacity: 1; 
+                filter: brightness(1); 
+            }
         }
 
         /* Silicon Layout Cards */
