@@ -12,7 +12,7 @@ import phase4
 import phase5
 
 # ==========================================
-# 1. APPLICATION DATA INITIALIZATION
+# 1. HARDWARE SYSTEM CORE SETUPS
 # ==========================================
 st.set_page_config(page_title="SemiPro | Semiconductor Workspace", layout="wide")
 
@@ -23,15 +23,28 @@ if "chat_history" not in st.session_state: st.session_state.chat_history = []
 if "GEMINI_API_KEY" in st.secrets:
     os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
 
-# Apply styles from separate style file module
+# Run layout styles from style module sheets
 apply_semiconductor_theme()
 
 # ==========================================
-# 2. RIGHT-SIDE ALIGNED PULSING "CONTENT" TRIGGER
+# 2. INJECT ABSOLUTE RIGHT-ALIGNED BADGE (Bypasses container blocks)
 # ==========================================
 trigger_label = "Close Content ✕" if st.session_state.show_topics_menu else "Content ☰"
-if st.button(trigger_label, key="right_topics_trigger"):
+
+# Form handler updates session values cleanly upon click
+st.markdown(f"""
+    <form action="" method="get" class="premium-right-badge">
+        <button type="submit" name="toggle_content" value="click" class="kinetic-gif-btn">
+            {trigger_label}
+        </button>
+    </form>
+""", unsafe_allow_html=True)
+
+# Process layout updates immediately when triggered
+query_parameters = st.query_params
+if "toggle_content" in query_parameters:
     st.session_state.show_topics_menu = not st.session_state.show_topics_menu
+    st.query_params.clear() # Reset parameter loop pipelines
     st.rerun()
 
 # ==========================================
@@ -92,7 +105,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# 4. ACTIVE DYNAMIC TOPICS INTERACTIVE PANEL
+# 4. INTUITIVE MASTER CONTENT CURRICULUM DIRECTORY
 # ==========================================
 if st.session_state.show_topics_menu:
     st.markdown("<div class='curriculum-overlay-map'>", unsafe_allow_html=True)
@@ -182,7 +195,7 @@ elif st.session_state.current_page == "Phase 5: Physical Design": phase5.render_
 st.markdown("</div>", unsafe_allow_html=True)
 
 # ==========================================
-# 6. INTEGRATED CHATBOT LOOP
+# 6. INTEGRATED EVALUATION TERMINAL COACH
 # ==========================================
 st.write("---")
 st.markdown("<h3 style='font-weight:600; color:#ffffff; font-size:1.2rem; letter-spacing:-0.5px;'>🎛️ Real-Time Silicon AI Evaluation Engine</h3>", unsafe_allow_html=True)
