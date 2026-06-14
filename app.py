@@ -16,60 +16,23 @@ import phase5
 # ==========================================
 st.set_page_config(page_title="SemiPro | Semiconductor Workspace", layout="wide")
 
+if "show_topics_menu" not in st.session_state: st.session_state.show_topics_menu = False
 if "current_page" not in st.session_state: st.session_state.current_page = "Home Dashboard"
 if "chat_history" not in st.session_state: st.session_state.chat_history = []
 
 if "GEMINI_API_KEY" in st.secrets:
     os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
 
-# Apply styles from your independent style module
+# Apply styles from your separate style module sheets
 apply_semiconductor_theme()
 
 # ==========================================
-# 2. INJECT PURE BROWSER WAVE NAV HUB (ZERO-RELOAD INTERACTION ENGINE)
+# 2. INTEGRATED RIGHT-SIDE ACTION TRIGGER
 # ==========================================
-st.markdown("""
-    <div class="hardware-nav-wrapper">
-        <input type="checkbox" id="waveNavToggle">
-        <label for="waveNavToggle" class="hardware-wake-btn">
-            <span class="btn-text"></span>
-        </label>
-        
-        <div class="curriculum-wave-panel">
-            <h2 style="color:#ffffff; font-weight:800; margin-top:0; font-family:'Plus Jakarta Sans',sans-serif;">📚 SemiPro Master Content Map</h2>
-            <p style="color:#9ca3af; font-size:0.95rem; margin-bottom:25px; font-family:'Plus Jakarta Sans',sans-serif;">Select an active engineering section from the curriculum column clusters below:</p>
-            
-            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; font-family:'Plus Jakarta Sans',sans-serif; text-align: left;">
-                <div>
-                    <h4 style="color:#06b6d4; margin-bottom:10px; font-weight:700;">Phase 1: CMOS</h4>
-                    <p style="color:#9ca3af; font-size:0.85rem; line-height:1.8; margin:0;">• NMOS/PMOS Physics<br>• Current Equations<br>• Inverter VTC<br>• Sub-Micron Leaks</p>
-                </div>
-                <div>
-                    <h4 style="color:#06b6d4; margin-bottom:10px; font-weight:700;">Phase 2: Digital</h4>
-                    <p style="color:#9ca3af; font-size:0.85rem; line-height:1.8; margin:0;">• CMOS Gate Logic<br>• Logical Effort Math<br>• Sequential Elements<br>• Metastability</p>
-                </div>
-                <div>
-                    <h4 style="color:#06b6d4; margin-bottom:10px; font-weight:700;">Phase 3: RTL</h4>
-                    <p style="color:#9ca3af; font-size:0.85rem; line-height:1.8; margin:0;">• Synthesizable Code<br>• FSM Controllers<br>• CDC Sync Tracks<br>• Linting Engines</p>
-                </div>
-                <div>
-                    <h4 style="color:#06b6d4; margin-bottom:10px; font-weight:700;">Phase 4: Synthesis</h4>
-                    <p style="color:#9ca3af; font-size:0.85rem; line-height:1.8; margin:0;">• Tech Mapping (.lib)<br>• SDC Clock Syntax<br>• IO Boundary Delays<br>• Wire Load Models</p>
-                </div>
-                <div>
-                    <h4 style="color:#06b6d4; margin-bottom:10px; font-weight:700;">Phase 5: PD</h4>
-                    <p style="color:#9ca3af; font-size:0.85rem; line-height:1.8; margin:0;">• Floorplan & PNS<br>• Cell Legalization<br>• CTS Skew Tuning<br>• DRC/LVS Sign-off</p>
-                </div>
-            </div>
-            <br>
-            <p style="color:#64748b; font-size:0.85rem; margin-top:15px; border-top: 1px solid rgba(255,255,255,0.06); padding-top:15px;">💡 Note: To swap active core workspace workspaces, use your standalone primary grid dashboard controls below.</p>
-        </div>
-    </div>
-    
-    <style>
-        .btn-text::before { content: "Content ☰"; }
-    </style>
-""", unsafe_allow_html=True)
+trigger_label = "Close Content ✕" if st.session_state.show_topics_menu else "Content ☰"
+if st.button(trigger_label, key="integrated_wave_trigger"):
+    st.session_state.show_topics_menu = not st.session_state.show_topics_menu
+    st.rerun()
 
 # ==========================================
 # 3. NATIVE MATHEMATICAL BACKGROUND CANVAS
@@ -129,7 +92,54 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# 4. MAIN CENTRAL CONTENT HUD VIEWPORT
+# 4. ACTIVE DYNAMIC CONTENT DIRECTORY MAP
+# ==========================================
+if st.session_state.show_topics_menu:
+    st.markdown("<div class='curriculum-overlay-map'>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color:#ffffff; font-weight:800; margin-top:0;'>📚 SemiPro Master Content Map</h2>", unsafe_allow_html=True)
+    st.write("Select any phase below to display its active curriculum matrix module block:")
+    
+    col_p1, col_p2, col_p3, col_p4, col_p5 = st.columns(5)
+    with col_p1:
+        st.markdown("<h4 style='color:#06b6d4; margin-bottom:5px;'>Phase 1: CMOS</h4>", unsafe_allow_html=True)
+        st.caption("• NMOS/PMOS Physics\n\n• Current Equations\n\n• Inverter VTC\n\n• Sub-Micron Leaks")
+        if st.button("Open Phase 1", key="jump_p1"):
+            st.session_state.current_page = "Phase 1: CMOS Deep Dive"
+            st.session_state.show_topics_menu = False
+            st.rerun()
+    with col_p2:
+        st.markdown("<h4 style='color:#06b6d4; margin-bottom:5px;'>Phase 2: Digital</h4>", unsafe_allow_html=True)
+        st.caption("• CMOS Gate Logic\n\n• Logical Effort Math\n\n• Sequential Elements\n\n• Metastability")
+        if st.button("Open Phase 2", key="jump_p2"):
+            st.session_state.current_page = "Phase 2: Digital Electronics"
+            st.session_state.show_topics_menu = False
+            st.rerun()
+    with col_p3:
+        st.markdown("<h4 style='color:#06b6d4; margin-bottom:5px;'>Phase 3: RTL</h4>", unsafe_allow_html=True)
+        st.caption("• Synthesizable Verilog\n\n• FSM Controllers\n\n• CDC Synchronization\n\n• Linting Rules")
+        if st.button("Open Phase 3", key="jump_p3"):
+            st.session_state.current_page = "Phase 3: Register Transfer Level"
+            st.session_state.show_topics_menu = False
+            st.rerun()
+    with col_p4:
+        st.markdown("<h4 style='color:#06b6d4; margin-bottom:5px;'>Phase 4: Synthesis</h4>", unsafe_allow_html=True)
+        st.caption("• Tech Mapping (.lib)\n\n• SDC Clock Syntax\n\n• Input/Output Delays\n\n• Wire Load Models")
+        if st.button("Open Phase 4", key="jump_p4"):
+            st.session_state.current_page = "Phase 4: Logic Synthesis"
+            st.session_state.show_topics_menu = False
+            st.rerun()
+    with col_p5:
+        st.markdown("<h4 style='color:#06b6d4; margin-bottom:5px;'>Phase 5: PD</h4>", unsafe_allow_html=True)
+        st.caption("• Floorplan & PNS\n\n• Cell Legalization\n\n• CTS Skew Balancing\n\n• DRC/LVS Sign-off")
+        if st.button("Open Phase 5", key="jump_p5"):
+            st.session_state.current_page = "Phase 5: Physical Design"
+            st.session_state.show_topics_menu = False
+            st.rerun()
+            
+    st.markdown("</div>", unsafe_allow_html=True)
+
+# ==========================================
+# 5. MAIN CENTRAL CONTENT HUD VIEWPORT
 # ==========================================
 st.markdown("<div class='glass-panel'>", unsafe_allow_html=True)
 
@@ -172,7 +182,7 @@ elif st.session_state.current_page == "Phase 5: Physical Design": phase5.render_
 st.markdown("</div>", unsafe_allow_html=True)
 
 # ==========================================
-# 5. INTEGRATED CHATBOT LOOP
+# 6. INTEGRATED CHATBOT LOOP
 # ==========================================
 st.write("---")
 st.markdown("<h3 style='font-weight:600; color:#ffffff; font-size:1.2rem; letter-spacing:-0.5px;'>🎛️ Real-Time Silicon AI Evaluation Engine</h3>", unsafe_allow_html=True)
