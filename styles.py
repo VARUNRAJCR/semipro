@@ -2,14 +2,14 @@ import streamlit as st
 
 def apply_semiconductor_theme():
     """
-    Injects matte obsidian glassmorphism styles, handles layout transparency,
-    and styles the native toggle button into a pulsing, floating navigation badge.
+    Restores the high-end matte glass styles, the native sand physics backplane,
+    and the kinetic pulsing 'click here for topics' drawer trigger.
     """
     st.markdown("""
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;800&family=JetBrains+Mono:wght@300;500&display=swap');
 
-        /* Force layout transparency for math canvas visibility */
+        /* Force deep layout transparency so the sand math canvas plays perfectly */
         html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
             background: transparent !important;
             color: #f3f4f6 !important;
@@ -27,50 +27,48 @@ def apply_semiconductor_theme():
         
         #MainMenu, footer, header {visibility: hidden;}
 
-        /* STYLE THE NATIVE STREAMLIT ELEMENT INTO A FLOATING PULSING BADGE */
-        div.element-container:has(button[key="topics_trigger_btn"]) {
+        /* RESTORED: THE HIGH-END ANIMATED KINETIC TRIGGER BADGE */
+        .custom-topics-trigger {
             position: fixed !important;
-            top: 25px !important;
-            left: 25px !important;
-            z-index: 999999 !important;
-            width: auto !important;
-        }
-
-        button[key="topics_trigger_btn"] {
+            top: 25px;
+            left: 25px;
             background: linear-gradient(135deg, #1e40af, #3b82f6) !important;
             color: #ffffff !important;
-            padding: 12px 24px !important;
-            border-radius: 50px !important;
-            font-weight: 600 !important;
-            font-size: 0.95rem !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7) !important;
-            animation: pulseWaveEffect 2s infinite cubic-bezier(0.66, 0, 0, 1) !important;
-            transition: all 0.3s ease !important;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            z-index: 999999 !important;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+            animation: pristinePulseWave 2s infinite cubic-bezier(0.66, 0, 0, 1);
+            letter-spacing: -0.2px;
         }
         
-        button[key="topics_trigger_btn"]:hover {
-            transform: scale(1.05) !important;
+        .custom-topics-trigger:hover {
+            transform: scale(1.04);
             background: linear-gradient(135deg, #2563eb, #60a5fa) !important;
         }
 
-        /* GIF Kinetic Motion Pulse Wave Effect */
-        @keyframes pulseWaveEffect {
+        /* The Beautiful Pulse Wave GIF Motion Effect */
+        @keyframes pristinePulseWave {
             0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
-            70% { box-shadow: 0 0 0 18px rgba(59, 130, 246, 0); }
+            70% { box-shadow: 0 0 0 20px rgba(59, 130, 246, 0); }
             100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
         }
 
-        /* Premium Glass Panel Container */
+        /* Premium Matte Obsidian Glass Panels */
         .glass-panel {
-            background: rgba(15, 23, 42, 0.8) !important;
+            background: rgba(15, 23, 42, 0.78) !important;
             border: 1px solid rgba(255, 255, 255, 0.08) !important;
             border-radius: 24px;
             padding: 40px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             box-shadow: 0 25px 55px rgba(0, 0, 0, 0.5);
-            margin-top: 50px;
+            margin-top: 60px;
             margin-bottom: 30px;
             z-index: 1;
         }
@@ -116,8 +114,7 @@ def apply_semiconductor_theme():
             margin-bottom: 15px;
         }
 
-        /* Standard dashboard buttons styling */
-        .stButton>button:not([key="topics_trigger_btn"]) {
+        .stButton>button {
             background: #ffffff !important;
             color: #030712 !important;
             border: none !important;
@@ -128,7 +125,7 @@ def apply_semiconductor_theme():
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
         }
 
-        /* Slide-Out Drawer Custom Sidebar Skins */
+        /* Slide-Out Drawer Custom Sidebar Layouts */
         [data-testid="stSidebar"] {
             background-color: rgba(10, 15, 30, 0.96) !important;
             border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -143,4 +140,24 @@ def apply_semiconductor_theme():
             border-radius: 12px !important;
         }
         </style>
+
+        /* RESTORED TRIGGER OVERLAY & CLICK COMMUNICATIONS SCRIPT */
+        <div class="custom-topics-trigger" onclick="openSidebarDrawerLoop()">click here for topics &lt;&lt;</div>
+
+        <script>
+        function openSidebarDrawerLoop() {
+            // Find the native hidden sidebar button hook inside Streamlit and execute click sequence
+            const nativeButton = window.parent.document.querySelector('button[aria-label="Open sidebar"]') || 
+                                 window.document.querySelector('button[aria-label="Open sidebar"]') ||
+                                 window.parent.document.querySelector('[data-testid="stSidebarCollapseButton"]');
+            if (nativeButton) {
+                nativeButton.click();
+            } else {
+                // Alternately reveal sidebar block directly if wrapper behaves aggressively
+                const sidebar = window.parent.document.querySelector('[data-testid="stSidebar"]');
+                if (sidebar) sidebar.style.transform = "translateX(0)";
+            }
+        }
+        </script>
     """, unsafe_allow_html=True)
+    
