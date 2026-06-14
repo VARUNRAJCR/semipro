@@ -2,15 +2,15 @@ import streamlit as st
 
 def apply_semiconductor_theme():
     """
-    Injects high-end matte obsidian glassmorphic styles, handles layout transparency,
-    and configures the presentation for the floating pulse wave topics trigger.
+    Injects matte obsidian glassmorphic styles and customizes the right-aligned
+    pulsing trigger badge to toggle the main topics directory mapping.
     """
     st.markdown("""
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;800&family=JetBrains+Mono:wght@300;500&display=swap');
 
-        /* Force transparency across content wrappers so the sand math canvas shows through */
-        html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
+        /* Force transparency across layers so the sand math canvas plays perfectly */
+        html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"], [data-testid="stSidebar"] {
             background: transparent !important;
             color: #f3f4f6 !important;
             font-family: 'Plus Jakarta Sans', sans-serif !important;
@@ -27,33 +27,35 @@ def apply_semiconductor_theme():
         
         #MainMenu, footer, header {visibility: hidden;}
 
-        /* THE ANIMATED KINETIC TRIGGER BADGE POSITIONING & LOOK */
-        .custom-topics-trigger {
+        /* STYLING THE NATIVE INTERACTION TRIGGER ON THE RIGHT SIDE */
+        div.element-container:has(button[key="right_topics_trigger"]) {
             position: fixed !important;
-            top: 25px;
-            left: 25px;
+            top: 25px !important;
+            right: 40px !important;
+            z-index: 999999 !important;
+            width: auto !important;
+        }
+
+        button[key="right_topics_trigger"] {
             background: linear-gradient(135deg, #1e40af, #3b82f6) !important;
             color: #ffffff !important;
-            padding: 14px 28px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            z-index: 999999 !important;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
-            animation: pristinePulseWave 2s infinite cubic-bezier(0.66, 0, 0, 1);
-            letter-spacing: -0.2px;
+            padding: 12px 26px !important;
+            border-radius: 50px !important;
+            font-weight: 600 !important;
+            font-size: 0.95rem !important;
+            border: 1px solid rgba(255, 255, 255, 0.25) !important;
+            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7) !important;
+            animation: pristineRightPulse 2s infinite cubic-bezier(0.66, 0, 0, 1) !important;
+            transition: all 0.3s ease !important;
         }
         
-        .custom-topics-trigger:hover {
-            transform: scale(1.04);
+        button[key="right_topics_trigger"]:hover {
+            transform: scale(1.04) !important;
             background: linear-gradient(135deg, #2563eb, #60a5fa) !important;
         }
 
-        /* Kinetic Pulse Wave Motion Effect */
-        @keyframes pristinePulseWave {
+        /* Right Side Kinetic Pulse Animation */
+        @keyframes pristineRightPulse {
             0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
             70% { box-shadow: 0 0 0 20px rgba(59, 130, 246, 0); }
             100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
@@ -73,7 +75,17 @@ def apply_semiconductor_theme():
             z-index: 1;
         }
 
-        /* High-End Vector Track Layout Cards */
+        /* Full Curriculum Overlay Panel Map */
+        .curriculum-overlay-map {
+            background: rgba(10, 15, 30, 0.95) !important;
+            border: 1px solid rgba(59, 130, 246, 0.2) !important;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Silicon Layout Cards */
         .silicon-vector-card {
             background: linear-gradient(145deg, rgba(30, 41, 59, 0.45), rgba(15, 23, 42, 0.35)) !important;
             border: 1px solid rgba(255, 255, 255, 0.05) !important;
@@ -114,7 +126,7 @@ def apply_semiconductor_theme():
             margin-bottom: 15px;
         }
 
-        .stButton>button {
+        .stButton>button:not([key="right_topics_trigger"]) {
             background: #ffffff !important;
             color: #030712 !important;
             border: none !important;
@@ -125,13 +137,7 @@ def apply_semiconductor_theme():
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
         }
 
-        /* Slide-Out Drawer Sidebar Setup */
-        [data-testid="stSidebar"] {
-            background-color: rgba(10, 15, 30, 0.96) !important;
-            border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
-            backdrop-filter: blur(25px);
-            z-index: 99999 !important;
-        }
+        [data-testid="stSidebar"] { visibility: hidden !important; width: 0px !important; }
         
         textarea {
             background-color: rgba(30, 41, 59, 0.4) !important;
