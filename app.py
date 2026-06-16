@@ -1,220 +1,179 @@
 import streamlit as st
-import os
-from google import genai
-from google.genai import types
 
-# Clean Modular Architecture Imports
-from styles import apply_semiconductor_theme
-import phase1
-import phase2
-import phase3
-import phase4
-import phase5
+def apply_semiconductor_theme():
+    """
+    Applies clean matte obsidian glassmorphic formatting rules, enforces background
+    transparency, and handles the absolute float layer for the right-side GIF tab.
+    """
+    st.markdown("""
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;500&display=swap');
 
-# ==========================================
-# 1. HARDWARE SYSTEM CORE SETUPS
-# ==========================================
-st.set_page_config(page_title="SemiPro | Semiconductor Workspace", layout="wide")
-
-if "show_topics_menu" not in st.session_state: st.session_state.show_topics_menu = False
-if "current_page" not in st.session_state: st.session_state.current_page = "Home Dashboard"
-if "chat_history" not in st.session_state: st.session_state.chat_history = []
-
-if "GEMINI_API_KEY" in st.secrets:
-    os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
-
-# Apply styles from your separate style module sheets
-apply_semiconductor_theme()
-
-# ==========================================
-# 2. NATIVE MATHEMATICAL BACKGROUND CANVAS
-# ==========================================
-st.markdown("""
-    <div class="math-universe-bg">
-        <canvas id="sandMatrixCanvas" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-2; pointer-events:none;"></canvas>
-    </div>
-
-    <script>
-    (function() {
-        const canvas = document.getElementById('sandMatrixCanvas');
-        const ctx = canvas.getContext('2d');
-        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resize); resize();
-
-        const grainCount = 135;
-        const gravitationalPull = 0.015;
-        const windDriftFactor = -0.03;
-        const grains = [];
-
-        for (let i = 0; i < grainCount; i++) {
-            grains.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                size: 1 + Math.random() * 2,
-                terminalVelocity: 0.4 + Math.random() * 1.0,
-                massAlpha: 0.15 + Math.random() * 0.35,
-                colorBand: Math.random() > 0.4 ? 'rgba(59, 130, 246,' : 'rgba(14, 165, 233,'
-            });
+        /* Force layout transparency so the background sand canvas is fully visible */
+        html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"], [data-testid="stSidebar"] {
+            background: transparent !important;
+            color: #f3f4f6 !important;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
         }
 
-        function processPhysicsEngine() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < grainCount; i++) {
-                let g = grains[i];
-                ctx.beginPath();
-                ctx.fillStyle = g.colorBand + g.massAlpha + ')';
-                ctx.arc(g.x, g.y, g.size, 0, Math.PI * 2, true);
-                ctx.fill();
-                
-                g.y += g.terminalVelocity;
-                g.x += windDriftFactor;
-                g.terminalVelocity += gravitationalPull;
-
-                if (g.y > canvas.height) {
-                    g.x = Math.random() * canvas.width;
-                    g.y = -10;
-                    g.terminalVelocity = 0.4 + Math.random() * 1.0;
-                }
-            }
-            requestAnimationFrame(processPhysicsEngine);
+        /* Fixed Background Math Position Layer */
+        .math-universe-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background-color: #030712;
+            z-index: -3;
         }
-        processPhysicsEngine();
-    })();
-    </script>
-""", unsafe_allow_html=True)
+        
+        #MainMenu, footer, header {visibility: hidden;}
 
-# ==========================================
-# 3. TOP ROW SPLIT: SITE IDENTIFIER & RIGHT SIDE BUTTON
-# ==========================================
-title_layout_col, action_layout_col = st.columns([5, 1])
+        /* PREMIUM FLOATING WRAPPER - ABSOLUTELY PINS TO THE UPPER RIGHT */
+        .gif-pop-container {
+            position: fixed !important;
+            top: 30px !important;
+            right: 40px !important;
+            z-index: 999999 !important;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+        }
 
-with title_layout_col:
-    # Keeps the primary platform identity tag beautifully separated on your left
-    st.markdown("<h2 style='font-weight:800; font-size:2.2rem; color:#ffffff; margin:0; padding:0; letter-spacing:-1px;'>SemiPro</h2>", unsafe_allow_html=True)
+        /* HIDE THE TOGGLE ELEMENT */
+        #gifPopToggle {
+            display: none !important;
+        }
 
-with action_layout_col:
-    # Native placement pins the pulsing button to your right side perfectly with no empty placeholders
-    trigger_label = "Close Content ✕" if st.session_state.show_topics_menu else "Content ☰"
-    if st.button(trigger_label, key="native_wave_trigger"):
-        st.session_state.show_topics_menu = not st.session_state.show_topics_menu
-        st.rerun()
+        /* TRUE DIGITAL KINETIC GIF STYLE BUTTON LAYER */
+        .gif-pop-badge {
+            background: linear-gradient(270deg, #1e40af, #06b6d4, #3b82f6, #1e40af) !important;
+            background-size: 400% 400% !important;
+            animation: glowMoveLoop 3s linear infinite, shockwavePulse 2s infinite cubic-bezier(0.66, 0, 0, 1) !important;
+            color: #ffffff !important;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+            display: inline-block;
+            user-select: none;
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3);
+        }
 
-# Spacer grid boundary line
-st.write(" ")
+        /* Pop Out Motion on Hover */
+        .gif-pop-badge:hover {
+            transform: scale(1.08) translateY(-2px);
+            border-color: #ffffff;
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.5);
+        }
 
-# ==========================================
-# 4. ACTIVE DYNAMIC CONTENT DIRECTORY MAP
-# ==========================================
-if st.session_state.show_topics_menu:
-    st.markdown("<div class='curriculum-overlay-map'>", unsafe_allow_html=True)
-    st.markdown("<h2 style='color:#ffffff; font-weight:800; margin-top:0;'>📚 SemiPro Master Content Map</h2>", unsafe_allow_html=True)
-    st.write("Select any phase below to display its active curriculum matrix module block:")
-    
-    col_p1, col_p2, col_p3, col_p4, col_p5 = st.columns(5)
-    with col_p1:
-        st.markdown("<h4 style='color:#06b6d4; margin-bottom:5px;'>Phase 1: CMOS</h4>", unsafe_allow_html=True)
-        st.caption("• NMOS/PMOS Physics\n\n• Current Equations\n\n• Inverter VTC\n\n• Sub-Micron Leaks")
-        if st.button("Open Phase 1", key="jump_p1"):
-            st.session_state.current_page = "Phase 1: CMOS Deep Dive"
-            st.session_state.show_topics_menu = False
-            st.rerun()
-    with col_p2:
-        st.markdown("<h4 style='color:#06b6d4; margin-bottom:5px;'>Phase 2: Digital</h4>", unsafe_allow_html=True)
-        st.caption("• CMOS Gate Logic\n\n• Logical Effort Math\n\n• Sequential Elements\n\n• Metastability")
-        if st.button("Open Phase 2", key="jump_p2"):
-            st.session_state.current_page = "Phase 2: Digital Electronics"
-            st.session_state.show_topics_menu = False
-            st.rerun()
-    with col_p3:
-        st.markdown("<h4 style='color:#06b6d4; margin-bottom:5px;'>Phase 3: RTL</h4>", unsafe_allow_html=True)
-        st.caption("• Synthesizable Verilog\n\n• FSM Controllers\n\n• CDC Synchronization\n\n• Linting Rules")
-        if st.button("Open Phase 3", key="jump_p3"):
-            st.session_state.current_page = "Phase 3: Register Transfer Level"
-            st.session_state.show_topics_menu = False
-            st.rerun()
-    with col_p4:
-        st.markdown("<h4 style='color:#06b6d4; margin-bottom:5px;'>Phase 4: Synthesis</h4>", unsafe_allow_html=True)
-        st.caption("• Tech Mapping (.lib)\n\n• SDC Clock Syntax\n\n• Input/Output Delays\n\n• Wire Load Models")
-        if st.button("Open Phase 4", key="jump_p4"):
-            st.session_state.current_page = "Phase 4: Logic Synthesis"
-            st.session_state.show_topics_menu = False
-            st.rerun()
-    with col_p5:
-        st.markdown("<h4 style='color:#06b6d4; margin-bottom:5px;'>Phase 5: PD</h4>", unsafe_allow_html=True)
-        st.caption("• Floorplan & PNS\n\n• Cell Legalization\n\n• CTS Skew Balancing\n\n• DRC/LVS Sign-off")
-        if st.button("Open Phase 5", key="jump_p5"):
-            st.session_state.current_page = "Phase 5: Physical Design"
-            st.session_state.show_topics_menu = False
-            st.rerun()
+        /* GIF Color Sweep Loop Mechanics */
+        @keyframes glowMoveLoop {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes shockwavePulse {
+            0% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.6); }
+            70% { box-shadow: 0 0 0 15px rgba(6, 182, 212, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); }
+        }
+
+        /* Dynamic Title Update via CSS */
+        .gif-pop-badge::before {
+            content: "Content ☰";
+        }
+        #gifPopToggle:checked + .gif-pop-badge::before {
+            content: "Close Content ✕";
+        }
+        #gifPopToggle:checked + .gif-pop-badge {
+            background: #e11d48 !important;
+            border-color: #ffffff !important;
+            box-shadow: 0 0 25px rgba(225, 29, 72, 0.6) !important;
+        }
+
+        /* INSTANT HIGH-SPEED DROP DOWN PANEL */
+        .instant-curriculum-panel {
+            position: fixed !important;
+            top: 95px !important;
+            right: 40px !important;
+            left: 40px !important;
+            background: rgba(10, 15, 30, 0.98) !important;
+            border: 1px solid rgba(6, 182, 212, 0.3) !important;
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 0 0 40px rgba(6, 182, 212, 0.15) !important;
+            z-index: 999998 !important;
             
-    st.markdown("</div>", unsafe_allow_html=True)
+            /* Ultra-fast 0.18s popup animation setup */
+            transform-origin: top right;
+            transform: scale(0);
+            opacity: 0;
+            visibility: hidden;
+            transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.15s ease !important;
+        }
 
-# ==========================================
-# 5. MAIN CENTRAL CONTENT HUD VIEWPORT
-# ==========================================
-st.markdown("<div class='glass-panel'>", unsafe_allow_html=True)
+        /* Open Trigger state configuration */
+        #gifPopToggle:checked ~ .instant-curriculum-panel {
+            transform: scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
 
-if st.session_state.current_page != "Home Dashboard":
-    if st.button("🏠 View All Phases (Return to Main Dashboard)"):
-        st.session_state.current_page = "Home Dashboard"
-        st.rerun()
-    st.write("---")
+        /* Matte Obsidian Glass Panel Containers */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.76) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 25px 55px rgba(0, 0, 0, 0.5);
+            margin-top: 20px;
+            margin-bottom: 30px;
+            z-index: 1;
+        }
 
-if st.session_state.current_page == "Home Dashboard":
-    st.markdown("<p style='font-size:1.2rem; color:#9ca3af; font-weight:300; margin-bottom:45px; margin-top:10px;'>Master modern semiconductor integration tracks systematically from raw transistor logic up to sign-off tapeout.</p>", unsafe_allow_html=True)
-    
-    row1_col1, row1_col2, row1_col3 = st.columns(3)
-    with row1_col1:
-        st.markdown("<div class='silicon-vector-card'><h3>Phase 1: CMOS</h3><p>Analyze transistor conduction physics, leakage thresholds, and dynamic voltage transfer parameters.</p></div>", unsafe_allow_html=True)
-        if st.button("Open Phase 1 Workspace", use_container_width=True): st.session_state.current_page = "Phase 1: CMOS Deep Dive"; st.rerun()
-    with row1_col2:
-        st.markdown("<div class='silicon-vector-card'><h3>Phase 2: Digital Electronics</h3><p>Master complex gate topologies, solve propagation path effort delays, and isolate flip-flop windows.</p></div>", unsafe_allow_html=True)
-        if st.button("Open Phase 2 Workspace", use_container_width=True): st.session_state.current_page = "Phase 2: Digital Electronics"; st.rerun()
-    with row1_col3:
-        st.markdown("<div class='silicon-vector-card'><h3>Phase 3: RTL</h3><p>Design timing-clean synthesizable logic blocks, finite state controllers, and asynchronous boundaries.</p></div>", unsafe_allow_html=True)
-        if st.button("Open Phase 3 Workspace", use_container_width=True): st.session_state.current_page = "Phase 3: Register Transfer Level"; st.rerun()
+        /* Course Phase Cards */
+        .silicon-vector-card {
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.45), rgba(15, 23, 42, 0.35)) !important;
+            border: 1px solid rgba(255, 255, 255, 0.05) !important;
+            border-radius: 20px;
+            padding: 28px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            height: 210px;
+            margin-bottom: 20px;
+        }
 
-    st.write(" ")
-    row2_col1, row2_col2 = st.columns([1, 2])
-    with row2_col1:
-        st.markdown("<div class='silicon-vector-card'><h3>Phase 4: Synthesis</h3><p>Map logic nets to standard gate primitives and implement core SDC boundary equations.</p></div>", unsafe_allow_html=True)
-        if st.button("Open Phase 4 Workspace", use_container_width=True): st.session_state.current_page = "Phase 4: Logic Synthesis"; st.rerun()
-    with row2_col2:
-        st.markdown("<div class='silicon-vector-card'><h3>Phase 5: Physical Design (PD)</h3><p>Execute full floorplanning grid blocks, balance clock trees, run routing tracks, and sign-off DRC checks.</p></div>", unsafe_allow_html=True)
-        if st.button("Open Phase 5 Workspace", use_container_width=True): st.session_state.current_page = "Phase 5: Physical Design"; st.rerun()
+        .silicon-vector-card:hover {
+            border-color: rgba(6, 182, 212, 0.5) !important;
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.5)) !important;
+            box-shadow: 0 15px 35px rgba(6, 182, 212, 0.2);
+            transform: translateY(-5px);
+        }
 
-elif st.session_state.current_page == "Phase 1: CMOS Deep Dive": phase1.render_phase_1()
-elif st.session_state.current_page == "Phase 2: Digital Electronics": phase2.render_phase_2()
-elif st.session_state.current_page == "Phase 3: Register Transfer Level": phase3.render_phase_3()
-elif st.session_state.current_page == "Phase 4: Logic Synthesis": phase4.render_phase_4()
-elif st.session_state.current_page == "Phase 5: Physical Design": phase5.render_phase_5()
+        .silicon-vector-card h3 { font-weight: 600; font-size: 1.35rem; color: #ffffff; margin-top: 0; margin-bottom: 12px; }
+        .silicon-vector-card p { color: #9ca3af; font-size: 0.95rem; line-height: 1.6; }
+        .terminal-box { background: rgba(15, 23, 42, 0.65) !important; border: 1px solid rgba(255, 255, 255, 0.06) !important; border-radius: 20px; padding: 24px; font-family: 'JetBrains Mono', monospace; margin-bottom: 15px; }
 
-st.markdown("</div>", unsafe_allow_html=True)
-
-# ==========================================
-# 6. INTEGRATED CHATBOT LOOP
-# ==========================================
-st.write("---")
-st.markdown("<h3 style='font-weight:600; color:#ffffff; font-size:1.2rem; letter-spacing:-0.5px;'>🎛️ Real-Time Silicon AI Evaluation Engine</h3>", unsafe_allow_html=True)
-
-st.markdown("<div class='terminal-box'>", unsafe_allow_html=True)
-for chat in st.session_state.chat_history:
-    if chat["role"] == "user": st.markdown(f"<p style='color:#3b82f6; margin-bottom:4px;'><strong>[STUDENT_VECTOR] ></strong> {chat['text']}</p>", unsafe_allow_html=True)
-    else: st.markdown(f"<p style='color:#10b981; margin-bottom:12px; white-space: pre-wrap;'><strong>[AI_COACH_MATRIX] ></strong> {chat['text']}</p>", unsafe_allow_html=True)
-st.markdown("</div>", unsafe_allow_html=True)
-
-chat_query = st.text_input("Enter command query loop syntax:", placeholder="Type a physical design or transistor logic question...", key="chat_input_field")
-
-if st.button("Execute Chat Query Pipeline"):
-    if chat_query:
-        st.session_state.chat_history.append({"role": "user", "text": chat_query})
-        with st.spinner("Processing telemetry analysis vectors..."):
-            try:
-                client = genai.Client()
-                system_instruction_context = "You are the master tutor of SemiPro Academy, an elite VLSI Physical Design Engineering specialist. Never use emojis. Keep explanations crisp, professional, and structured."
-                response = client.models.generate_content(model='gemini-2.5-flash', contents=chat_query, config=types.GenerateContentConfig(system_instruction=system_instruction_context))
-                ai_response_text = response.text
-            except Exception:
-                ai_response_text = f"Telemetry Loop Verified: Received '{chat_query}'."
-        st.session_state.chat_history.append({"role": "ai", "text": ai_response_text})
-        st.rerun()
+        .stButton>button {
+            background: #ffffff !important;
+            color: #030712 !important;
+            border: none !important;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-weight: 600 !important;
+            border-radius: 14px !important;
+            padding: 14px 28px !important;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        
+        textarea {
+            background-color: rgba(30, 41, 59, 0.4) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            color: #f3f4f6 !important;
+            border-radius: 12px !important;
+        }
+        </style>
+    """, unsafe_allow_html=True)
