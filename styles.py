@@ -2,14 +2,14 @@ import streamlit as st
 
 def apply_semiconductor_theme():
     """
-    Applies clean matte obsidian glassmorphic formatting rules, enforces layout
-    transparency, and customizes the top-right floating GIF wave action toggle button.
+    Applies matte obsidian glassmorphic styles, sets up a transparent canvas wrapper,
+    and forces the animated 'Content' trigger to anchor strictly on the top-right viewport.
     """
     st.markdown("""
         <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;500&display=swap');
 
-        /* Force transparency across core content containers so background sand flows beautifully */
+        /* Force layout transparency so the background sand canvas is fully visible */
         html, body, [data-testid="stAppViewContainer"], [data-testid="stHeader"], [data-testid="stSidebar"] {
             background: transparent !important;
             color: #f3f4f6 !important;
@@ -27,23 +27,23 @@ def apply_semiconductor_theme():
         
         #MainMenu, footer, header {visibility: hidden;}
 
-        /* ABSOLUTE FIXED POSITIONING FOR THE CONTENT BADGE MATRIX */
+        /* CRITICAL POSITIONING OVERRIDE: Forces the button wrapper to the absolute top-right of your screen */
         div.element-container:has(button[key="master_wave_trigger"]) {
             position: fixed !important;
             top: 30px !important;
-            right: 40px !important;
-            left: auto !important;
+            right: 40px !important;  /* Pins it to the right boundary of your browser */
+            left: auto !important;   /* Wipes out any cached left-side alignments */
             z-index: 999999 !important;
             width: auto !important;
         }
 
-        /* HARDWARE KINETIC INTERACTIVE GIF STYLE BUTTON LAYER */
+        /* DIGITAL KINETIC GIF STYLE BUTTON ENGINE */
         button[key="master_wave_trigger"] {
             background: linear-gradient(270deg, #1e40af, #06b6d4, #3b82f6, #1e40af) !important;
             background-size: 400% 400% !important;
             animation: circuitGlowSweep 3s linear infinite, hardwarePulseWave 2s infinite cubic-bezier(0.66, 0, 0, 1) !important;
             color: #ffffff !important;
-            padding: 12px 30px !important;
+            padding: 12px 32px !important;
             border-radius: 50px !important;
             font-size: 0.9rem !important;
             font-weight: 800 !important;
@@ -52,32 +52,32 @@ def apply_semiconductor_theme():
             cursor: pointer !important;
             border: 2px solid rgba(255, 255, 255, 0.4) !important;
             box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3) !important;
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important; /* Springy asset behavior */
             display: inline-block !important;
         }
 
-        /* 3D Elastic Pop Out Hover Event */
+        /* 3D Pop Out Hover Animation */
         button[key="master_wave_trigger"]:hover {
             transform: scale(1.08) translateY(-2px) !important;
             border-color: #ffffff !important;
             box-shadow: 0 10px 25px rgba(6, 182, 212, 0.5) !important;
         }
 
-        /* Infinite color sweep loops */
+        /* Continuous color sweep looping curves */
         @keyframes circuitGlowSweep {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* Infinite outward shockwave core pulses */
+        /* Radial pulse background shadow rings */
         @keyframes hardwarePulseWave {
             0% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.6); }
             70% { box-shadow: 0 0 0 15px rgba(6, 182, 212, 0); }
             100% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); }
         }
 
-        /* Premium Matte Obsidian Glass Panel Containers - Safe and Clean */
+        /* Premium Matte Obsidian Glass Panel Containers */
         .glass-panel {
             background: rgba(15, 23, 42, 0.76) !important;
             border: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -91,7 +91,7 @@ def apply_semiconductor_theme():
             z-index: 1;
         }
 
-        /* HIGH-SPEED ELASTIC OCEAN WAVE DROPDOWN OVERLAY MAPPING PANEL */
+        /* INSTANT ULTRA-FAST VELOCITY OCEAN-WAVE REVEAL PANEL */
         .curriculum-wave-panel {
             background: rgba(10, 15, 30, 0.98) !important;
             border: 1px solid rgba(6, 182, 212, 0.3) !important;
@@ -101,13 +101,13 @@ def apply_semiconductor_theme():
             margin-bottom: 35px !important;
             box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 0 0 40px rgba(6, 182, 212, 0.15) !important;
             transform-origin: top right;
-            animation: snappyWaveRoll 0.25s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            animation: ultraSnappyWaveRoll 0.22s cubic-bezier(0.25, 1, 0.5, 1) forwards; /* Reduced delay curve */
             will-change: transform, opacity;
         }
 
-        @keyframes snappyWaveRoll {
+        @keyframes ultraSnappyWaveRoll {
             0% { 
-                transform: translateY(-20px) scaleY(0.6) scaleX(0.98); 
+                transform: translateY(-20px) scaleY(0.7) scaleX(0.98); 
                 opacity: 0; 
                 filter: blur(4px);
             }
@@ -118,7 +118,7 @@ def apply_semiconductor_theme():
             }
         }
 
-        /* Core Phase Grid Cards formatting rules */
+        /* Phase Grid Cards Formatting Rules */
         .silicon-vector-card {
             background: linear-gradient(145deg, rgba(30, 41, 59, 0.45), rgba(15, 23, 42, 0.35)) !important;
             border: 1px solid rgba(255, 255, 255, 0.05) !important;
@@ -141,7 +141,7 @@ def apply_semiconductor_theme():
         
         .terminal-box { background: rgba(15, 23, 42, 0.65) !important; border: 1px solid rgba(255, 255, 255, 0.06) !important; border-radius: 20px; padding: 24px; font-family: 'JetBrains Mono', monospace; margin-bottom: 15px; }
 
-        /* General workspace system buttons styling */
+        /* General workspace dashboard buttons styling */
         .stButton>button:not([key="master_wave_trigger"]) {
             background: #ffffff !important;
             color: #030712 !important;
