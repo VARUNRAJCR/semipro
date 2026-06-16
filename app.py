@@ -27,7 +27,7 @@ if "GEMINI_API_KEY" in st.secrets:
 apply_semiconductor_theme()
 
 # ==========================================
-# 2. FLOATING RIGHT-SIDE PULSING NAVIGATION TOGGLE BUTTON
+# 2. FLOATING RIGHT-SIDE PULSING TOGGLE BUTTON
 # ==========================================
 trigger_label = "Close Content ✕" if st.session_state.show_topics_menu else "Content ☰"
 if st.button(trigger_label, key="master_wave_trigger"):
